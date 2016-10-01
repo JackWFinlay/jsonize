@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>JackWFinlay.Jsonize</id>
+    <version>$version$</version>
+    <title>Jsonize</title>
+    <authors>Jack Witbrock Finlay</authors>
+    <owners>Jack Witbrock Finlay</owners>
+    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Convert HTML documents to JSON.</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Html Json HTML JSON convert</tags>
+  </metadata>
+</package>
