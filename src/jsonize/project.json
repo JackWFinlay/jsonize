@@ -1,4 +1,8 @@
 ﻿{
+  "title": "Jsonize",
+  "copyright": "Copyright 2016",
+  "description": "Convert HTML to JSON",
+  "language": "en",
   "version": "1.0.0",
 
   "dependencies": {
