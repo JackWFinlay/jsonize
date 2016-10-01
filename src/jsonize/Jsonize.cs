@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text.Encodings.Web;
 using static System.Net.WebUtility;
 
-namespace jsonize
+namespace JackWFinlay.Jsonize
 {
     public class Jsonize
     {

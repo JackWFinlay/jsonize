@@ -1,9 +1,10 @@
 ﻿{
-  "title": "Jsonize",
+  "name" : "JackWFinlay.Jsonize",
+  "title": "JackWFinlay.Jsonize",
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",

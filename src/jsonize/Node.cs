@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace jsonize
+namespace JackWFinlay.Jsonize
 {
     public class Node
     {
