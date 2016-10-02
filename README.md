@@ -19,7 +19,6 @@ private static async Task<string> Testy(string q = "")
 {
     using (var client = new HttpClient())
     {
-        client.DefaultRequestHeaders.Accept.Clear();
         string url = @"http://jackfinlay.com";
 
         HttpResponseMessage response = await client.GetAsync(url);
@@ -46,14 +45,15 @@ Results are in the form:
     "text":"If node is of type Text, this will display the text in that node.",
     "attr":{
                 "name":"value",
-                "name":"value"
+                "name":"value",
+                "class": []
             },
     "child":[
                 {
                     "node":"Node type e.g. Document, Element, or Comment",
                     "tag":"If node is Element this will display the tag e.g p, h1 ,div etc.",
                     "text":"If node is of type Text, this will display the text in that node.",
-                    "child": [...]
+                    "child": []
                 },
                 ...
             ]
