@@ -20,4 +20,7 @@
       <dependency id="System.Text.Encodings.Web" version="4.0.0" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="" />
+  </files>
 </package>

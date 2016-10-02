@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Jsonize", "src\jsonize\Jsonize.xproj", "{ECFF49F2-299D-4249-B759-AB7D6581757A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Jsonize.Test", "Jsonize.Test\Jsonize.Test.xproj", "{0627F614-5097-4EE7-B1A6-6B95BA616682}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,11 +25,16 @@ Global
 		{ECFF49F2-299D-4249-B759-AB7D6581757A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECFF49F2-299D-4249-B759-AB7D6581757A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECFF49F2-299D-4249-B759-AB7D6581757A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0627F614-5097-4EE7-B1A6-6B95BA616682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0627F614-5097-4EE7-B1A6-6B95BA616682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0627F614-5097-4EE7-B1A6-6B95BA616682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0627F614-5097-4EE7-B1A6-6B95BA616682}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ECFF49F2-299D-4249-B759-AB7D6581757A} = {577BE96F-5D13-487E-86D0-93C4EC9AD246}
+		{0627F614-5097-4EE7-B1A6-6B95BA616682} = {577BE96F-5D13-487E-86D0-93C4EC9AD246}
 	EndGlobalSection
 EndGlobal
