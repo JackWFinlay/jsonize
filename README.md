@@ -169,5 +169,6 @@ Becomes:
 
 
 ## TODO:
+- Port to .Net 4.6
 - Add support to directly pass in a URL.
 - Remove formatting issues such as empty child arrays on Script tags with no content.
