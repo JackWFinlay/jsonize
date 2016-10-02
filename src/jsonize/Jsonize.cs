@@ -138,7 +138,20 @@ namespace JackWFinlay.Jsonize
             List<HtmlAttribute> attributes = htmlNode.Attributes.ToList<HtmlAttribute>();
             foreach (HtmlAttribute attribute in attributes)
             {
-                attributeDict[attribute.Name] = attribute.Value;
+                if (attribute.Name.Equals("class"))
+                {
+                    string[] classes = attribute.Value.Split(' ');
+                    List<string> classList = new List<string>();
+                    foreach (string @class in classes)
+                    {
+                        classList.Add(@class);
+                    }
+                    attributeDict["class"] = classList;
+                }
+                else
+                {
+                    attributeDict[attribute.Name] = attribute.Value;
+                }
             }
         }
 

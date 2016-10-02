@@ -4,7 +4,16 @@
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.1",
+  "version": "1.0.2",
+  "authors": [ "Jack Witbrock Finlay" ],
+
+  "packOptions": {
+    "owners": [ "Jack Witbrock Finlay" ],
+    "repository": { "url": "https://github.com/JackWFinlay/jsonize" },
+    "releaseNotes": "Change class attributes to be array instead of space separated string.",
+    "tags": [ "Json", "Html", "Convert" ],
+    "summary": "Convert HTML to JSON"
+  },
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",

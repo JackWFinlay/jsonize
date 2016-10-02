@@ -1,6 +1,7 @@
 # jsonize
 Convert HTML to JSON.
-Try it out at http://jsonize.co
+Try it out: http://jsonize.co
+Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/
 
 ## Usage
 
@@ -173,4 +174,4 @@ Becomes:
 - Add support to directly pass in a URL.
 - Remove formatting issues such as empty child arrays on Script tags with no content.
 - Add Documentation.
-- Change class attribute to List rather than space seperated.
+- Change class attribute to array rather than space separated.
