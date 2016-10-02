@@ -66,9 +66,9 @@ Results are in the form:
     </head>
     <body>
         <div id="parent" class="parent-div">
-            <div id="child1" class="child-div">Some Text</div>
-            <div id="child2" class="child-div">Some Text</div>
-            <div id="child3" class="child-div">Some Text</div>
+            <div id="child1" class="child-div child1">Some Text</div>
+            <div id="child2" class="child-div child2">Some Text</div>
+            <div id="child3" class="child-div child3">Some Text</div>
         </div>
     </body>
 </html>
@@ -112,7 +112,9 @@ Becomes:
               "tag": "div",
               "attr": {
                 "id": "parent",
-                "class": "parent-div"
+                "class": [
+                  "parent-div"
+                ]
               },
               "child": [
                 {
@@ -120,7 +122,10 @@ Becomes:
                   "tag": "div",
                   "attr": {
                     "id": "child1",
-                    "class": "child-div"
+                    "class": [
+                      "child-div",
+                      "child1"
+                    ]
                   },
                   "child": [
                     {
@@ -134,7 +139,10 @@ Becomes:
                   "tag": "div",
                   "attr": {
                     "id": "child2",
-                    "class": "child-div"
+                    "class": [
+                      "child-div",
+                      "child2"
+                    ]
                   },
                   "child": [
                     {
@@ -148,7 +156,10 @@ Becomes:
                   "tag": "div",
                   "attr": {
                     "id": "child3",
-                    "class": "child-div"
+                    "class": [
+                      "child-div",
+                      "child3"
+                    ]
                   },
                   "child": [
                     {
@@ -174,4 +185,4 @@ Becomes:
 - Add support to directly pass in a URL.
 - Remove formatting issues such as empty child arrays on Script tags with no content.
 - Add Documentation.
-- Change class attribute to array rather than space separated.
+- ~~Change class attribute to array rather than space separated.~~ Fixed in 1.0.2
