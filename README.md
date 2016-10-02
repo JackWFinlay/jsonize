@@ -1,6 +1,8 @@
 # jsonize
 Convert HTML to JSON.
+
 Try it out: http://jsonize.co
+
 Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/
 
 ## Usage
