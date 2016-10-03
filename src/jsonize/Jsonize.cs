@@ -126,8 +126,14 @@ namespace JackWFinlay.Jsonize
                 {
                     parentNode.child.Add(childNode);
                 }
+
+
             }
 
+            if (parentNode.child.Count == 0)
+            {
+                parentNode.child = null;
+            }
         }
 
         private static bool IsEmptyChildNode(Node childNode)
