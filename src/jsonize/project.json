@@ -4,15 +4,15 @@
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "authors": [ "Jack Witbrock Finlay" ],
 
   "packOptions": {
     "owners": [ "Jack Witbrock Finlay" ],
+    "releaseNotes": "Fix empty child elements. Add option whether to include empty text nodes.",
     "repository": { "url": "https://github.com/JackWFinlay/jsonize" },
-    "releaseNotes": "Change class attributes to be array instead of space separated string.",
-    "tags": [ "Json", "Html", "Convert" ],
-    "summary": "Convert HTML to JSON"
+    "summary": "Convert HTML to JSON",
+    "tags": [ "Json", "Html", "Convert" ]
   },
 
   "dependencies": {
