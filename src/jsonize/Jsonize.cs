@@ -14,6 +14,7 @@ namespace JackWFinlay.Jsonize
     public class Jsonize
     {
         private HtmlDocument _htmlDoc;
+        private bool showEmptyTextNodes;
 
         /// <summary>
         /// Creates a new Jsonize object.
@@ -37,6 +38,15 @@ namespace JackWFinlay.Jsonize
         {
             _htmlDoc = new HtmlDocument();
             _htmlDoc.LoadHtml(html);
+        }
+
+        /// <summary>
+        /// Sets whether or not to show empty text nodes. Default is False.
+        /// </summary>
+        /// <param name="showEmptyTextNodes">Whether or not to show empty text nodes</param>
+        public void ShowEmptyTextNodes(bool showEmptyTextNodes)
+        {
+            this.showEmptyTextNodes = showEmptyTextNodes;
         }
         
         /// <summary>
@@ -67,7 +77,7 @@ namespace JackWFinlay.Jsonize
             return ParseHtmlAsJson().ToString() ;
         }
 
-        private static void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
+        private void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
         {
             foreach (HtmlNode htmlNode in parentHtmlNode.ChildNodes)
             {
@@ -85,8 +95,9 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
+
                 string trimmedInnerText = HtmlDecode(htmlNode.InnerText.Trim());
-                if (!String.IsNullOrWhiteSpace(trimmedInnerText))
+                if (showEmptyTextNodes || !String.IsNullOrWhiteSpace(trimmedInnerText))
                 {
                     if (!htmlNode.HasChildNodes)
                     {   
@@ -131,7 +142,7 @@ namespace JackWFinlay.Jsonize
                    );
         }
 
-        private static void AddAttributes(HtmlNode htmlNode, Node childNode)
+        private void AddAttributes(HtmlNode htmlNode, Node childNode)
         {
             IDictionary<string, object> attributeDict = childNode.attr as IDictionary<string, object>;
 
