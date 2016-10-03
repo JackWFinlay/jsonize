@@ -33,8 +33,9 @@ namespace Jsonize_Test
                 HttpResponseMessage response = await client.GetAsync(url);
 
                 string html = await response.Content.ReadAsStringAsync();
-                html = System.IO.File.ReadAllText(@"C:\Users\Public\file.html");
+                //html = System.IO.File.ReadAllText(@"C:\Users\Public\file.html");
                 Jsonize jsonize = new Jsonize(html);
+                jsonize.ShowEmptyTextNodes(true);
 
                 return jsonize.ParseHtmlAsJsonString();
             }
