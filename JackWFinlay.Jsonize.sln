@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Jsonize", "src\jsonize\Jsonize.xproj", "{ECFF49F2-299D-4249-B759-AB7D6581757A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Jsonize.Test", "Jsonize.Test\Jsonize.Test.xproj", "{0627F614-5097-4EE7-B1A6-6B95BA616682}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Jsonize.Test", "src\Jsonize.Test\Jsonize.Test.xproj", "{0627F614-5097-4EE7-B1A6-6B95BA616682}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
