@@ -185,6 +185,6 @@ Becomes:
 ## TODO:
 - Port to .Net 4.6.
 - Add support to directly pass in a URL.
-- Remove formatting issues such as empty child arrays on Script tags with no content.
+- ~~Remove formatting issues such as empty child arrays on Script tags with no content.~~ Fixed in 1.0.3
 - Add Documentation.
 - ~~Change class attribute to array rather than space separated.~~ Fixed in 1.0.2
