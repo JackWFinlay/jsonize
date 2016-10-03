@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Text.Encodings.Web;
 using static System.Net.WebUtility;
 
 namespace JackWFinlay.Jsonize
