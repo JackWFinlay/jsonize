@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using JackWFinlay.Jsonize;
 using System.Threading.Tasks;
 
-namespace Jsonize.Test
+namespace Jsonize_Test
 {
     public class Program
     {
@@ -15,12 +17,12 @@ namespace Jsonize.Test
 
         private static async void Test()
         {
-            string result = await Testy();
+            string result = await TestJsonizeAsString();
             Console.WriteLine(result);
             System.IO.File.WriteAllText(@"C:\Users\Public\WriteText.txt", result);
         }
 
-        private static async Task<string> Testy(string q = "")
+        private static async Task<string> TestJsonizeAsString()
         {
 
             using (var client = new HttpClient())
@@ -31,8 +33,9 @@ namespace Jsonize.Test
                 HttpResponseMessage response = await client.GetAsync(url);
 
                 string html = await response.Content.ReadAsStringAsync();
-                html = System.IO.File.ReadAllText(@"C:\Users\Public\file.html");
+                //html = System.IO.File.ReadAllText(@"C:\Users\Public\file.html");
                 Jsonize jsonize = new Jsonize(html);
+                jsonize.ShowEmptyTextNodes(false);
 
                 return jsonize.ParseHtmlAsJsonString();
             }
