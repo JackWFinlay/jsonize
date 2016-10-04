@@ -45,12 +45,15 @@ namespace JackWFinlay.Jsonize
         {
             this.showEmptyTextNodes = showEmptyTextNodes;
         }
-        
+
         /// <summary>
         /// Resturns a JObject of the HTML document.
         /// </summary>
-        /// <returns>The JSON representation of an HTML document as a JObject.</returns>
-        public JObject ParseHtmlAsJson()
+        /// <param name="includeNullValues">Determines whether to include/ignore null values.</param>
+        /// <returns>
+        /// The JSON representation of an HTML document as a JObject.
+        /// </returns>
+        public JObject ParseHtmlAsJson(bool includeNullValues = false)
         {
             Node parentNode = new Node();
             HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
@@ -60,7 +63,7 @@ namespace JackWFinlay.Jsonize
 
             JsonSerializer _jsonWriter = new JsonSerializer
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = includeNullValues ? NullValueHandling.Include : NullValueHandling.Ignore
             };
             return JObject.FromObject(parentNode, _jsonWriter);
         }
