@@ -4,7 +4,7 @@
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "authors": [ "Jack Witbrock Finlay" ],
 
   "packOptions": {
@@ -16,19 +16,24 @@
   },
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0",
-    "MysticMind.HtmlAgilityPack": "1.0.0",
-    "System.Dynamic.Runtime": "4.0.11",
-    "Newtonsoft.Json": "9.0.1",
-    "System.Text.Encodings.Web": "4.0.0"
+    "Newtonsoft.Json": "9.0.1"
   },
 
   "frameworks": {
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "MysticMind.HtmlAgilityPack": "1.0.0",
+        "System.Dynamic.Runtime": "4.0.11",
+        "System.Text.Encodings.Web": "4.0.0"
+      }
     },
     "net46": {
-
+      "dependencies": {
+        "HtmlAgilityPack": "1.4.9.5"
+      }
     } 
   }
 }
