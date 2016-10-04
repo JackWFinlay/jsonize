@@ -9,7 +9,7 @@
 
   "packOptions": {
     "owners": [ "Jack Witbrock Finlay" ],
-    "releaseNotes": "Fix empty child elements. Add option whether to include empty text nodes.",
+    "releaseNotes": "Add support for .NET Framework 4.6",
     "repository": { "url": "https://github.com/JackWFinlay/jsonize" },
     "summary": "Convert HTML to JSON",
     "tags": [ "Json", "Html", "Convert" ]
