@@ -202,6 +202,6 @@ Becomes:
 - Add support to directly pass in a URL.
 - Add Documentation.
 
-## Licence
+## License
 MIT
-See licence.md for details.
+See [license.md](license.md) for details.
