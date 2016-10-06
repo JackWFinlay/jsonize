@@ -32,7 +32,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingInlcude\r\n" + result));
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingInlcude\r\n" + result));
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingInclude\r\n" + result));
         }
 
         [Test]
@@ -69,6 +69,30 @@ namespace Jsonize_Test
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
             File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingIgnore\r\n" + result));
+        }
+
+        [Test]
+        public async Task TestTextTrimHandlingInclude()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                TextTrimHandling = TextTrimHandling.Include
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestTextTrimHandlingInclude\r\n" + result));
+        }
+
+        [Test]
+        public async Task TestTextTrimHandlingTrim()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                TextTrimHandling = TextTrimHandling.Trim
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestTextTrimHandlingIgnore\r\n" + result));
         }
 
         private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)

@@ -13,6 +13,7 @@ namespace JackWFinlay.Jsonize
         internal HtmlDocument _htmlDoc;
         internal EmptyTextNodeHandling _emptyTextNodeHandling;
         internal NullValueHandling _nullValueHandling;
+        internal TextTrimHandling _textTrimHandling;
 
         /// <summary>
         /// Creates a new <see cref="Jsonize"/> object.
@@ -22,6 +23,7 @@ namespace JackWFinlay.Jsonize
             _htmlDoc = _htmlDoc ?? new HtmlDocument();
             _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
             _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
+            _textTrimHandling = JsonizeConfiguration.DefaultTextTrimHandling;
         }
 
         /// <summary>
@@ -103,6 +105,11 @@ namespace JackWFinlay.Jsonize
             {
                 _nullValueHandling = jsonizeConfiguration.NullValueHandling;
             }
+
+            if (jsonizeConfiguration._textTrimHandling != null)
+            {
+                _textTrimHandling = jsonizeConfiguration.TextTrimHandling;
+            }
         }
 
         private void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
@@ -123,12 +130,22 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
-                string trimmedInnerText = HtmlDecode(htmlNode.InnerText.Trim());
-                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !String.IsNullOrWhiteSpace(trimmedInnerText))
+                string innerText = "";
+
+                if (_textTrimHandling == TextTrimHandling.Trim)
+                {
+                    innerText = HtmlDecode(htmlNode.InnerText.Trim());
+                }
+                else
+                {
+                    innerText = HtmlDecode(htmlNode.InnerText);
+                }
+
+                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !String.IsNullOrWhiteSpace(innerText))
                 {
                     if (!htmlNode.HasChildNodes)
                     {   
-                        childNode.text = trimmedInnerText;
+                        childNode.text = innerText;
                     }
 
                     childNode.node = htmlNode.NodeType.ToString();

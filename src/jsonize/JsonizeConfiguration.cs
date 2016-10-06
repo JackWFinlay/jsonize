@@ -9,9 +9,11 @@ namespace JackWFinlay.Jsonize
     {
         internal const EmptyTextNodeHandling DefaultEmptyTextNodeHandling = EmptyTextNodeHandling.Ignore;
         internal const NullValueHandling DefaultNullValueHandling = NullValueHandling.Ignore;
+        internal const TextTrimHandling DefaultTextTrimHandling = TextTrimHandling.Trim;
 
         internal EmptyTextNodeHandling? _emptyTextNodeHandling;
         internal NullValueHandling? _nullValueHandling;
+        internal TextTrimHandling? _textTrimHandling;
 
         /// <summary>
         /// Gets or sets how empty text nodes are handled during conversion.
@@ -33,6 +35,15 @@ namespace JackWFinlay.Jsonize
             set { _nullValueHandling = value; }
         }
 
+        /// <summary>
+        /// Gets or sets how white-space in inner-text of nodes is handled during conversion.
+        /// </summary>
+        /// <value>White-space trim handling.</value>
+        public TextTrimHandling TextTrimHandling
+        {
+            get { return _textTrimHandling ?? DefaultTextTrimHandling; }
+            set { _textTrimHandling = value; }
+        }
 
 
 
