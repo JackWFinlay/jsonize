@@ -204,4 +204,5 @@ Becomes:
 
 ## License
 MIT
+
 See [license.md](license.md) for details.
