@@ -5,7 +5,7 @@
   },
 
   "dependencies": {
-    "jsonize": "1.0.2",
+    "Jsonize": "*",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"

@@ -2,22 +2,6 @@
 <package >
   <metadata>
     <id>JackWFinlay.Jsonize</id>
-    <version>1.0.4</version>
-    <title>Jsonize</title>
-    <authors>Jack Witbrock Finlay</authors>
-    <owners>Jack Witbrock Finlay</owners>
-    <projectUrl>https://github.com/JackWFinlay/jsonize</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Convert HTML to JSON.</description>
-    <releaseNotes>Initial release</releaseNotes>
-    <copyright>Copyright 2016</copyright>
-    <tags>Html Json HTML JSON convert</tags>
-    <dependencies>
-      <dependency id="Newtonsoft.Json" version="9.0.1" />
-      <dependency id="NETStandard.Library" version="1.6.0" />
-      <dependency id="MysticMind.HtmlAgilityPack" version="1.0.0" />
-      <dependency id="System.Dynamic.Runtime" version="4.0.11" />
-      <dependency id="System.Text.Encodings.Web" version="4.0.0" />
-    </dependencies>
+    <version>1.0.5</version>
   </metadata>
 </package>

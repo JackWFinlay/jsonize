@@ -10,46 +10,43 @@ namespace JackWFinlay.Jsonize
 {
     public class Jsonize
     {
-        private HtmlDocument _htmlDoc;
-        private bool showEmptyTextNodes;
+        internal HtmlDocument _htmlDoc;
+        internal EmptyTextNodeHandling _emptyTextNodeHandling;
+        internal NullValueHandling _nullValueHandling;
 
         /// <summary>
-        /// Creates a new Jsonize object.
+        /// Creates a new <see cref="Jsonize"/> object.
         /// </summary>
         public Jsonize()
         {
-            _htmlDoc = new HtmlDocument();
+            _htmlDoc = _htmlDoc ?? new HtmlDocument();
+            _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
+            _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
         }
 
         /// <summary>
-        /// Constructs a Jsonize object with the supplied HtmlDocument.
+        /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="HtmlDocument"/> .
         /// </summary>
         /// <param name="htmlDoc"></param>
-        public Jsonize(HtmlDocument htmlDoc)
+        public Jsonize(HtmlDocument htmlDoc) : this()
         {
             _htmlDoc = htmlDoc;
-            
         }
 
-        public Jsonize(string html)
+        /// <summary>
+        /// Constructs a <see cref="Jsonize"/> object with the supplied HTML <see cref="string"/>.
+        /// </summary>
+        /// <param name="html"></param>
+        public Jsonize(string html) : this()
         {
             _htmlDoc = new HtmlDocument();
             _htmlDoc.LoadHtml(html);
         }
 
         /// <summary>
-        /// Sets whether or not to show empty text nodes. Default is False.
+        /// Resturns a <see cref="JObject"/> of the HTML document.
         /// </summary>
-        /// <param name="showEmptyTextNodes">Whether or not to show empty text nodes</param>
-        public void ShowEmptyTextNodes(bool showEmptyTextNodes)
-        {
-            this.showEmptyTextNodes = showEmptyTextNodes;
-        }
-        
-        /// <summary>
-        /// Resturns a JObject of the HTML document.
-        /// </summary>
-        /// <returns>The JSON representation of an HTML document as a JObject.</returns>
+        /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
         public JObject ParseHtmlAsJson()
         {
             Node parentNode = new Node();
@@ -60,18 +57,52 @@ namespace JackWFinlay.Jsonize
 
             JsonSerializer _jsonWriter = new JsonSerializer
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = (Newtonsoft.Json.NullValueHandling)_nullValueHandling
             };
             return JObject.FromObject(parentNode, _jsonWriter);
         }
 
         /// <summary>
+        /// Resturns a <see cref="JObject"/> of the HTML document.
+        /// </summary>
+        /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
+        public JObject ParseHtmlAsJson(JsonizeConfiguration jsonizeConfiguration)
+        {
+            ApplyConfiguration(jsonizeConfiguration);
+
+            return ParseHtmlAsJson();
+        }
+
+        /// <summary>
         /// Returns a JSON string representation of the HTML document.
         /// </summary>
-        /// <returns>The string representation of the HTML document.</returns>
+        /// <returns>The <see cref="string"/> representation of the HTML document.</returns>
         public string ParseHtmlAsJsonString()
         {
             return ParseHtmlAsJson().ToString() ;
+        }
+
+        /// <summary>
+        /// Returns a JSON string representation of the HTML document with the settings supplied in the <see cref="JsonizeConfiguration"/>.
+        /// </summary>
+        /// <returns>The <see cref="string"/> representation of the HTML document.</returns>
+        public string ParseHtmlAsJsonString(JsonizeConfiguration jsonizeConfiguration)
+        {
+            ApplyConfiguration(jsonizeConfiguration);
+            return ParseHtmlAsJson().ToString();
+        }
+
+        private void ApplyConfiguration(JsonizeConfiguration jsonizeConfiguration)
+        {
+            if (jsonizeConfiguration._emptyTextNodeHandling != null)
+            {
+                _emptyTextNodeHandling = jsonizeConfiguration.EmptyTextNodeHandling;
+            }
+
+            if (jsonizeConfiguration._nullValueHandling != null)
+            {
+                _nullValueHandling = jsonizeConfiguration.NullValueHandling;
+            }
         }
 
         private void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
@@ -92,9 +123,8 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
-
                 string trimmedInnerText = HtmlDecode(htmlNode.InnerText.Trim());
-                if (showEmptyTextNodes || !String.IsNullOrWhiteSpace(trimmedInnerText))
+                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !String.IsNullOrWhiteSpace(trimmedInnerText))
                 {
                     if (!htmlNode.HasChildNodes)
                     {   

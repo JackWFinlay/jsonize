@@ -37,6 +37,19 @@ Alternatively, get the response as a Newtonsoft.Json JObject:
 return jsonize.ParseHtmlAsJson();
 ```
 
+You can control the output with a JsonizeConfiguration object, which is passed as a parameter to the parsing methods:
+
+```C#
+...
+JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+{
+    NullValueHandling = NullValueHandling.Include,
+    EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore
+};
+
+return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
+```
+
 Results are in the form:
 ```JSON
 {

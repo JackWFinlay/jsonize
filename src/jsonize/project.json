@@ -1,18 +1,20 @@
 ﻿{
-  "name" : "JackWFinlay.Jsonize",
+  "name": "JackWFinlay.Jsonize",
   "title": "JackWFinlay.Jsonize",
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "authors": [ "Jack Witbrock Finlay" ],
 
   "packOptions": {
     "owners": [ "Jack Witbrock Finlay" ],
-    "releaseNotes": "Add support for .NET Framework 4.6",
-    "repository": { "url": "https://github.com/JackWFinlay/jsonize" },
+    "releaseNotes": "Add Jsonize configuration options through the JsonizeConfiguration object. See project site for details.",
+    "repository": { "url": "https://github.com/JackWFinlay/jsonize", "type": "git" },
     "summary": "Convert HTML to JSON",
-    "tags": [ "Json", "Html", "Convert" ]
+    "tags": [ "Json", "Html", "Convert" ],
+    "requireLicenseAcceptance": false,
+    "projectUrl": "https://github.com/JackWFinlay/jsonize"
   },
 
   "dependencies": {
@@ -34,6 +36,6 @@
       "dependencies": {
         "HtmlAgilityPack": "1.4.9.5"
       }
-    } 
+    }
   }
 }

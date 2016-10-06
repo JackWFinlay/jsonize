@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using JackWFinlay.Jsonize;
@@ -16,6 +14,7 @@ namespace Jsonize_Test
     {
         public static void Main(string[] args)
         {
+            File.WriteAllText(@"C:\Users\Public\WriteText.txt", "");
             new AutoRun(Assembly.GetEntryAssembly()).Execute(
                 args,
                 new ExtendedTextWrapper(Console.Out),
@@ -25,14 +24,54 @@ namespace Jsonize_Test
         }
 
         [Test]
-        public async Task Test()
+        public async Task TestEmptyTextNodesHandlingInlcude()
         {
-            string result = await TestJsonizeAsString();
-            Console.WriteLine(result);
-            File.WriteAllText(@"C:\Users\Public\WriteText.txt", result);
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                EmptyTextNodeHandling = EmptyTextNodeHandling.Include
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingInlcude\r\n" + result));
         }
 
-        private static async Task<string> TestJsonizeAsString()
+        [Test]
+        public async Task TestEmptyTextNodesHandlingIgnore()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingIgnore\r\n" + result));
+        }
+
+        [Test]
+        public async Task TestNullValueHandlingInclude()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                NullValueHandling = NullValueHandling.Include
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingInlcude\r\n" + result));
+        }
+
+        [Test]
+        public async Task TestNullValueHandlingIgnore()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                NullValueHandling= NullValueHandling.Ignore
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingIgnore\r\n" + result));
+        }
+
+        private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)
         {
 
             using (var client = new HttpClient())
@@ -43,11 +82,9 @@ namespace Jsonize_Test
                 HttpResponseMessage response = await client.GetAsync(url);
 
                 string html = await response.Content.ReadAsStringAsync();
-                //html = System.IO.File.ReadAllText(@"C:\Users\Public\file.html");
                 Jsonize jsonize = new Jsonize(html);
-                jsonize.ShowEmptyTextNodes(false);
 
-                return jsonize.ParseHtmlAsJsonString();
+                return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
             }
         }
     }
