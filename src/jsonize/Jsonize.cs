@@ -46,6 +46,21 @@ namespace JackWFinlay.Jsonize
         }
 
         /// <summary>
+        /// Send an HTTP GET request to fetch HTML and then construct a <see cref="Jsonize"/> object.
+        /// </summary>
+        /// <param name="httpUrl">Url for HTTP GET request</param>
+        /// <returns>Jsonize object constructed with the response body</returns>
+        static public async System.Threading.Tasks.Task<Jsonize> FromHttpUrl(string httpUrl)
+        {
+            using (var client = new System.Net.Http.HttpClient())
+            using (var response = await client.GetAsync(httpUrl))
+            {
+                var html = await response.Content.ReadAsStringAsync();
+                return new Jsonize(html);
+            }
+        }
+
+        /// <summary>
         /// Resturns a <see cref="JObject"/> of the HTML document.
         /// </summary>
         /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
