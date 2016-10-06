@@ -43,8 +43,9 @@ You can control the output with a JsonizeConfiguration object, which is passed a
 ...
 JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
 {
-    NullValueHandling = NullValueHandling.Include,
-    EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore
+    NullValueHandling = NullValueHandling.Ignore,
+    EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore,
+    TextTrimHandling = TextTrimHandling.Trim
 };
 
 return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
@@ -196,7 +197,7 @@ Becomes:
 
 
 ## TODO:
-- ~~~Port to .Net 4.6.~~~ Fixed in 1.0.5
+- ~~Port to .Net 4.6.~~ Fixed in 1.0.5
 - ~~Remove formatting issues such as empty child arrays on Script tags with no content.~~ Fixed in 1.0.3
 - ~~Change class attribute to array rather than space separated.~~ Fixed in 1.0.2
 - Add support to directly pass in a URL.
