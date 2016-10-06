@@ -9,7 +9,9 @@
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
-    }
+    },
+    "NUnit": "3.5.0",
+    "NUnitLite": "3.5.0"
   },
 
   "frameworks": {
