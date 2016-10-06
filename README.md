@@ -1,4 +1,4 @@
-# jsonize
+# Jsonize
 Convert HTML to JSON. Currently available for .NET Framework 4.6, .NET Standard Library 1.6, and .NET Core 1.0. May be compatible with lower versions, any help porting backwards would be great.
 
 Try it out: http://jsonize.co
@@ -196,8 +196,12 @@ Becomes:
 
 
 ## TODO:
-- Port to .Net 4.6.
-- Add support to directly pass in a URL.
+- ~~~Port to .Net 4.6.~~~ Fixed in 1.0.5
 - ~~Remove formatting issues such as empty child arrays on Script tags with no content.~~ Fixed in 1.0.3
-- Add Documentation.
 - ~~Change class attribute to array rather than space separated.~~ Fixed in 1.0.2
+- Add support to directly pass in a URL.
+- Add Documentation.
+
+## Licence
+MIT
+See licence.md for details.
