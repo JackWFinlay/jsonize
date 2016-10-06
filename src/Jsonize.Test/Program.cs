@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using JackWFinlay.Jsonize;
 using System.Threading.Tasks;
+using NUnit.Common;
+using NUnit.Framework;
+using NUnitLite;
 
 namespace Jsonize_Test
 {
@@ -11,15 +16,20 @@ namespace Jsonize_Test
     {
         public static void Main(string[] args)
         {
-            Test();
+            new AutoRun(Assembly.GetEntryAssembly()).Execute(
+                args,
+                new ExtendedTextWrapper(Console.Out),
+                TextReader.Null);
+
             Console.ReadLine();
         }
 
-        private static async void Test()
+        [Test]
+        public async Task Test()
         {
             string result = await TestJsonizeAsString();
             Console.WriteLine(result);
-            System.IO.File.WriteAllText(@"C:\Users\Public\WriteText.txt", result);
+            File.WriteAllText(@"C:\Users\Public\WriteText.txt", result);
         }
 
         private static async Task<string> TestJsonizeAsString()
