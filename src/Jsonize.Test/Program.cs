@@ -95,6 +95,30 @@ namespace Jsonize_Test
             File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestTextTrimHandlingIgnore\r\n" + result));
         }
 
+        [Test]
+        public async Task TestClassAttributeHandlingArray()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                ClassAttributeHandling = ClassAttributeHandling.Array
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestClassAttributeHandlingArray\r\n" + result));
+        }
+
+        [Test]
+        public async Task TestClassAttributeHandlingString()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
+            {
+                ClassAttributeHandling = ClassAttributeHandling.String
+            };
+
+            string result = await TestJsonizeAsString(jsonizeConfiguration);
+            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestClassAttributeHandlingString\r\n" + result));
+        }
+
         private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)
         {
 

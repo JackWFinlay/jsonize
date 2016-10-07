@@ -16,6 +16,7 @@ namespace JackWFinlay.Jsonize
         internal EmptyTextNodeHandling _emptyTextNodeHandling;
         internal NullValueHandling _nullValueHandling;
         internal TextTrimHandling _textTrimHandling;
+        internal ClassAttributeHandling _classAttributeHandling;
 
         /// <summary>
         /// Gets or sets the <see cref="HtmlDocument"/> for the <see cref="Jsonize"/> object.
@@ -46,6 +47,7 @@ namespace JackWFinlay.Jsonize
             _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
             _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
             _textTrimHandling = JsonizeConfiguration.DefaultTextTrimHandling;
+            _classAttributeHandling = JsonizeConfiguration.DefaultClassAttributeHandling;
         }
 
         /// <summary>
@@ -167,6 +169,11 @@ namespace JackWFinlay.Jsonize
             {
                 _textTrimHandling = jsonizeConfiguration.TextTrimHandling;
             }
+
+            if (jsonizeConfiguration._classAttributeHandling != null)
+            {
+                _classAttributeHandling = jsonizeConfiguration.ClassAttributeHandling;
+            }
         }
 
         private void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
@@ -247,7 +254,7 @@ namespace JackWFinlay.Jsonize
             List<HtmlAttribute> attributes = htmlNode.Attributes.ToList<HtmlAttribute>();
             foreach (HtmlAttribute attribute in attributes)
             {
-                if (attribute.Name.Equals("class"))
+                if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
                 {
                     string[] classes = attribute.Value.Split(' ');
                     List<string> classList = new List<string>();
