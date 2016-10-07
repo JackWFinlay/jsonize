@@ -18,6 +18,26 @@ namespace JackWFinlay.Jsonize
         internal TextTrimHandling _textTrimHandling;
 
         /// <summary>
+        /// Gets or sets the <see cref="HtmlDocument"/> for the <see cref="Jsonize"/> object.
+        /// </summary>
+        /// <value><see cref="HtmlDocument"/></value>
+        public HtmlDocument HtmlDoc
+        {
+            get { return _htmlDoc ?? new HtmlDocument(); }
+            set { _htmlDoc = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Html <see cref="string"/> for the <see cref="Jsonize"/> object.
+        /// </summary>
+        /// <value>Html <see cref="string"/></value>
+        public string HtmlString
+        {
+            get { return _htmlDoc.ToString() ?? ""; }
+            set { _htmlDoc.LoadHtml(value); }
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Jsonize"/> object.
         /// </summary>
         public Jsonize()
@@ -31,7 +51,7 @@ namespace JackWFinlay.Jsonize
         /// <summary>
         /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="HtmlDocument"/> .
         /// </summary>
-        /// <param name="htmlDoc"></param>
+        /// <param name="htmlDoc">HtmlDocument loaded with the html string</param>
         public Jsonize(HtmlDocument htmlDoc) : this()
         {
             _htmlDoc = htmlDoc;
@@ -40,7 +60,7 @@ namespace JackWFinlay.Jsonize
         /// <summary>
         /// Constructs a <see cref="Jsonize"/> object with the supplied HTML <see cref="string"/>.
         /// </summary>
-        /// <param name="html"></param>
+        /// <param name="html">Html string</param>
         public Jsonize(string html) : this()
         {
             _htmlDoc = new HtmlDocument();
@@ -52,7 +72,7 @@ namespace JackWFinlay.Jsonize
         /// </summary>
         /// <param name="httpUrl">Url for HTTP GET request</param>
         /// <returns>Jsonize object constructed with the response body</returns>
-        static public async Task<Jsonize> FromHttpUrl(string httpUrl)
+        public static async Task<Jsonize> FromHttpUrl(string httpUrl)
         {
             using (var client = new HttpClient())
             using (var response = await client.GetAsync(httpUrl))
@@ -60,6 +80,26 @@ namespace JackWFinlay.Jsonize
                 var html = await response.Content.ReadAsStringAsync();
                 return new Jsonize(html);
             }
+        }
+
+        /// <summary>
+        /// Construct a Jsonize object from an html <see cref="string"/>.
+        /// </summary>
+        /// <param name="htmlString">The html document as a <see cref="string"/></param>
+        /// <returns>Jsonize object constructed from the html <see cref="string"/></returns>
+        public static Jsonize FromHtmlString(string htmlString)
+        {
+            return new Jsonize(htmlString);
+        }
+
+        /// <summary>
+        /// Construct a Jsonize object from an <see cref="HtmlDocument"/>.
+        /// </summary>
+        /// <param name="htmlDoc">The <see cref="HtmlDocument"/> to construct the <see cref="Jsonize"/> object with.</param>
+        /// <returns>Jsonize object constructed from the html <see cref="string"/></returns>
+        public static Jsonize FromHtmlDocument(string htmlDoc)
+        {
+            return new Jsonize(htmlDoc);
         }
 
         /// <summary>
@@ -147,7 +187,7 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
-                string innerText = "";
+                string innerText;
 
                 if (_textTrimHandling == TextTrimHandling.Trim)
                 {
@@ -198,15 +238,6 @@ namespace JackWFinlay.Jsonize
             {
                 parentNode.child = null;
             }
-        }
-
-        private static bool IsEmptyChildNode(Node childNode)
-        {
-            return (!object.ReferenceEquals(childNode.attr, null) &&
-                    !object.ReferenceEquals(childNode.child, null) &&
-                    !object.ReferenceEquals(childNode.tag, null) &&
-                    !object.ReferenceEquals(childNode.text, null)
-                   );
         }
 
         private void AddAttributes(HtmlNode htmlNode, Node childNode)
