@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -43,6 +45,21 @@ namespace JackWFinlay.Jsonize
         {
             _htmlDoc = new HtmlDocument();
             _htmlDoc.LoadHtml(html);
+        }
+
+        /// <summary>
+        /// Send an HTTP GET request to fetch HTML and then construct a <see cref="Jsonize"/> object.
+        /// </summary>
+        /// <param name="httpUrl">Url for HTTP GET request</param>
+        /// <returns>Jsonize object constructed with the response body</returns>
+        static public async Task<Jsonize> FromHttpUrl(string httpUrl)
+        {
+            using (var client = new HttpClient())
+            using (var response = await client.GetAsync(httpUrl))
+            {
+                var html = await response.Content.ReadAsStringAsync();
+                return new Jsonize(html);
+            }
         }
 
         /// <summary>
