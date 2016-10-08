@@ -13,6 +13,8 @@ namespace Jsonize_Test
     public class Program
     {
         const string TEXTFILE = "WriteText.txt";
+        static string _html = null;
+
         public static void Main(string[] args)
         {
             new AutoRun(Assembly.GetEntryAssembly()).Execute(
@@ -133,19 +135,20 @@ namespace Jsonize_Test
 
         private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)
         {
-
-            using (var client = new HttpClient())
+            if (_html == null) 
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                string url = @"http://jackfinlay.com";
-
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                string html = await response.Content.ReadAsStringAsync();
-                Jsonize jsonize = new Jsonize(html);
-
-                return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    string url = @"http://jackfinlay.com";
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    _html = await response.Content.ReadAsStringAsync();
+                }
             }
+            
+            Jsonize jsonize = new Jsonize(_html);
+
+            return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
         }
     }
 }
