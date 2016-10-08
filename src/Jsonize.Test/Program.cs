@@ -12,15 +12,29 @@ namespace Jsonize_Test
 {
     public class Program
     {
+        const string TEXTFILE = "WriteText.txt";
+        static string _html = null;
+
         public static void Main(string[] args)
         {
-            File.WriteAllText(@"C:\Users\Public\WriteText.txt", "");
             new AutoRun(Assembly.GetEntryAssembly()).Execute(
                 args,
                 new ExtendedTextWrapper(Console.Out),
                 TextReader.Null);
 
             Console.ReadLine();
+        }
+
+        [SetUp] 
+        public void Init()
+        {
+            File.WriteAllText(TEXTFILE, "");
+        }
+
+        [TearDown] 
+        public void Cleanup() 
+        {
+            File.Delete(TEXTFILE);
         }
 
         [Test]
@@ -32,7 +46,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
         }
 
         [Test]
@@ -44,7 +58,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestEmptyTextNodesHandlingIgnore\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingIgnore\r\n" + result));
         }
 
         [Test]
@@ -56,7 +70,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingInclude\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestNullValueHandlingInclude\r\n" + result));
         }
 
         [Test]
@@ -68,7 +82,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestNullValueHandlingIgnore\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestNullValueHandlingIgnore\r\n" + result));
         }
 
         [Test]
@@ -80,7 +94,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestTextTrimHandlingInclude\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestTextTrimHandlingInclude\r\n" + result));
         }
 
         [Test]
@@ -92,7 +106,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestTextTrimHandlingIgnore\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestTextTrimHandlingIgnore\r\n" + result));
         }
 
         [Test]
@@ -104,7 +118,7 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestClassAttributeHandlingArray\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestClassAttributeHandlingArray\r\n" + result));
         }
 
         [Test]
@@ -116,24 +130,25 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(@"C:\Users\Public\WriteText.txt", ("\r\nTestClassAttributeHandlingString\r\n" + result));
+            File.AppendAllText(TEXTFILE, ("\r\nTestClassAttributeHandlingString\r\n" + result));
         }
 
         private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)
         {
-
-            using (var client = new HttpClient())
+            if (_html == null) 
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                string url = @"http://jackfinlay.com";
-
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                string html = await response.Content.ReadAsStringAsync();
-                Jsonize jsonize = new Jsonize(html);
-
-                return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    string url = @"http://jackfinlay.com";
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    _html = await response.Content.ReadAsStringAsync();
+                }
             }
+            
+            Jsonize jsonize = new Jsonize(_html);
+
+            return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
         }
     }
 }
