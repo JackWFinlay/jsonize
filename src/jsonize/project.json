@@ -4,7 +4,7 @@
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "authors": [ "Jack Witbrock Finlay" ],
 
   "packOptions": {
