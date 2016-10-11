@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 namespace JackWFinlay.Jsonize
 {
     /// <summary>
-    /// Specifies handling of empty text nodes.
+    /// Specifies handling of empty Text nodes.
     /// </summary>
     public enum EmptyTextNodeHandling
     {
         /// <summary>
-        /// Include empty text nodes in the conversion output.
+        /// Include empty Text nodes in the conversion output.
         /// </summary>
         Include = 0,
 
         /// <summary>
-        /// Exclude empty text nodes from conversion output.
+        /// Exclude empty Text nodes from conversion output.
         /// </summary>
         Ignore = 1
 

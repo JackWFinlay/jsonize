@@ -133,6 +133,32 @@ namespace Jsonize_Test
             File.AppendAllText(TEXTFILE, ("\r\nTestClassAttributeHandlingString\r\n" + result));
         }
 
+        [Test]
+        public async Task TestCreatingJsonizeMetaObject()
+        {
+            JsonizeNode result = await TestJsonizeAsJsonizeNode();
+            JsonizeMeta jsonizeMeta = new JsonizeMeta(result, @"http://jackfinlay.com/?something=something" );
+        }
+
+        private static async Task<JsonizeNode> TestJsonizeAsJsonizeNode()
+        {
+            if (_html == null)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    const string url = @"http://jackfinlay.com";
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    _html = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            Jsonize jsonize = new Jsonize(_html);
+
+            return jsonize.ParseHtmlAsJsonizeNode();
+        }
+
+
         private static async Task<string> TestJsonizeAsString(JsonizeConfiguration jsonizeConfiguration)
         {
             if (_html == null) 
@@ -140,7 +166,7 @@ namespace Jsonize_Test
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
-                    string url = @"http://jackfinlay.com";
+                    const string url = @"http://jackfinlay.com";
                     HttpResponseMessage response = await client.GetAsync(url);
                     _html = await response.Content.ReadAsStringAsync();
                 }

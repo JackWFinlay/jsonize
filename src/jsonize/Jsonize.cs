@@ -12,11 +12,11 @@ namespace JackWFinlay.Jsonize
 {
     public class Jsonize
     {
-        internal HtmlDocument _htmlDoc;
-        internal EmptyTextNodeHandling _emptyTextNodeHandling;
-        internal NullValueHandling _nullValueHandling;
-        internal TextTrimHandling _textTrimHandling;
-        internal ClassAttributeHandling _classAttributeHandling;
+        private HtmlDocument _htmlDoc;
+        private EmptyTextNodeHandling _emptyTextNodeHandling;
+        private NullValueHandling _nullValueHandling;
+        private TextTrimHandling _textTrimHandling;
+        private ClassAttributeHandling _classAttributeHandling;
 
         /// <summary>
         /// Gets or sets the <see cref="HtmlDocument"/> for the <see cref="Jsonize"/> object.
@@ -105,22 +105,37 @@ namespace JackWFinlay.Jsonize
         }
 
         /// <summary>
-        /// Resturns a <see cref="JObject"/> of the HTML document.
+        /// Returns a <see cref="JObject"/> of the HTML document.
         /// </summary>
         /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
         public JObject ParseHtmlAsJson()
         {
-            Node parentNode = new Node();
+            JsonizeNode parentJsonizeNode = new JsonizeNode();
             HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
 
-            parentNode.node = parentHtmlNode.NodeType.ToString();
-            GetChildren(parentNode, parentHtmlNode);
+            parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
+            GetChildren(parentJsonizeNode, parentHtmlNode);
 
-            JsonSerializer _jsonWriter = new JsonSerializer
+            JsonSerializer jsonWriter = new JsonSerializer
             {
                 NullValueHandling = (Newtonsoft.Json.NullValueHandling)_nullValueHandling
             };
-            return JObject.FromObject(parentNode, _jsonWriter);
+            return JObject.FromObject(parentJsonizeNode, jsonWriter);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="JsonizeNode"/> of the HTML document.
+        /// </summary>
+        /// <returns>The JSON representation of an HTML document as a <see cref="JsonizeNode"/>.</returns>
+        public JsonizeNode ParseHtmlAsJsonizeNode()
+        {
+            JsonizeNode parentJsonizeNode = new JsonizeNode();
+            HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
+
+            parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
+            GetChildren(parentJsonizeNode, parentHtmlNode);
+
+            return parentJsonizeNode;
         }
 
         /// <summary>
@@ -176,80 +191,71 @@ namespace JackWFinlay.Jsonize
             }
         }
 
-        private void GetChildren(Node parentNode, HtmlNode parentHtmlNode)
+        private void GetChildren(JsonizeNode parentJsonizeNode, HtmlNode parentHtmlNode)
         {
             foreach (HtmlNode htmlNode in parentHtmlNode.ChildNodes)
             {
                 bool addToParent = false;
-                Node childNode = new Node();
+                JsonizeNode childJsonizeNode = new JsonizeNode();
 
-                if (parentNode.child == null)
+                if (parentJsonizeNode.Children == null)
                 {
-                    parentNode.child = new List<Node>();
+                    parentJsonizeNode.Children = new List<JsonizeNode>();
                 }
 
                 if (!htmlNode.Name.StartsWith("#"))
                 {
-                    childNode.tag = htmlNode.Name;
+                    childJsonizeNode.Tag = htmlNode.Name;
                     addToParent = true;
                 }
 
-                string innerText;
-
-                if (_textTrimHandling == TextTrimHandling.Trim)
-                {
-                    innerText = HtmlDecode(htmlNode.InnerText.Trim());
-                }
-                else
-                {
-                    innerText = HtmlDecode(htmlNode.InnerText);
-                }
+                string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
 
                 if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !String.IsNullOrWhiteSpace(innerText))
                 {
                     if (!htmlNode.HasChildNodes)
                     {   
-                        childNode.text = innerText;
+                        childJsonizeNode.Text = innerText;
                     }
 
-                    childNode.node = htmlNode.NodeType.ToString();
+                    childJsonizeNode.Node = htmlNode.NodeType.ToString();
                     addToParent = true;
                 }
 
                 if (htmlNode.HasAttributes)
                 {
-                    if (childNode.attr == null)
+                    if (childJsonizeNode.Attributes == null)
                     {
-                        childNode.attr = new System.Dynamic.ExpandoObject();
+                        childJsonizeNode.Attributes = new System.Dynamic.ExpandoObject();
                     }
 
-                    AddAttributes(htmlNode, childNode);
+                    AddAttributes(htmlNode, childJsonizeNode);
                     addToParent = true;
                 }
 
                 if (htmlNode.HasChildNodes)
                 {
-                    GetChildren(childNode, htmlNode);
+                    GetChildren(childJsonizeNode, htmlNode);
                     addToParent = true;
                 }
 
                 if (addToParent)
                 {
-                    parentNode.child.Add(childNode);
+                    parentJsonizeNode.Children.Add(childJsonizeNode);
                 }
 
 
             }
 
-            if (parentNode.child.Count == 0)
+            if (parentJsonizeNode.Children.Count == 0)
             {
-                parentNode.child = null;
+                parentJsonizeNode.Children = null;
             }
         }
 
-        private void AddAttributes(HtmlNode htmlNode, Node childNode)
+        private void AddAttributes(HtmlNode htmlNode, JsonizeNode childJsonizeNode)
         {
-            IDictionary<string, object> attributeDict = childNode.attr as IDictionary<string, object>;
+            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes as IDictionary<string, object>;
 
             List<HtmlAttribute> attributes = htmlNode.Attributes.ToList<HtmlAttribute>();
             foreach (HtmlAttribute attribute in attributes)

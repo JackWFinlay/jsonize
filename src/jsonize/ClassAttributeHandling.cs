@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace JackWFinlay.Jsonize
 {
     /// <summary>
-    /// Specifies handling of the class attributes on a node during conversion.
+    /// Specifies handling of the class attributes on a Node during conversion.
     /// </summary>
     public enum ClassAttributeHandling
     {

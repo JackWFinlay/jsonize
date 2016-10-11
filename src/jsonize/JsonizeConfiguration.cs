@@ -18,9 +18,9 @@ namespace JackWFinlay.Jsonize
         internal ClassAttributeHandling? _classAttributeHandling;
 
         /// <summary>
-        /// Gets or sets how empty text nodes are handled during conversion.
+        /// Gets or sets how empty Text nodes are handled during conversion.
         /// </summary>
-        /// <value>Empty text node handling.</value>
+        /// <value>Empty Text Node handling.</value>
         public EmptyTextNodeHandling EmptyTextNodeHandling
         {
             get { return _emptyTextNodeHandling ?? DefaultEmptyTextNodeHandling; }
@@ -38,7 +38,7 @@ namespace JackWFinlay.Jsonize
         }
 
         /// <summary>
-        /// Gets or sets how white-space in inner-text of nodes is handled during conversion.
+        /// Gets or sets how white-space in inner-Text of nodes is handled during conversion.
         /// </summary>
         /// <value>White-space trim handling.</value>
         public TextTrimHandling TextTrimHandling
