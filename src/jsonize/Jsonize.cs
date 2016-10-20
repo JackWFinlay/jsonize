@@ -43,6 +43,8 @@ namespace JackWFinlay.Jsonize
         /// </summary>
         public Jsonize()
         {
+            // Fix #26: Form tag parsed as a text node.
+            HtmlNode.ElementsFlags.Remove("form");
             _htmlDoc = _htmlDoc ?? new HtmlDocument();
             _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
             _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
