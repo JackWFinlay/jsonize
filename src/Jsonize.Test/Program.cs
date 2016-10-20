@@ -140,6 +140,18 @@ namespace Jsonize_Test
             JsonizeMeta jsonizeMeta = new JsonizeMeta(result, @"http://jackfinlay.com/?something=something" );
         }
 
+        [Test]
+        public async Task TestFormNodeShouldBeNode()
+        {
+            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration();
+
+            Jsonize jsonize = new Jsonize("<html><head></head><body><form></form></body></html>");
+            var result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
+
+            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"tag\":\"html\",\"child\":[{\"tag\":\"head\"},{\"tag\":\"body\",\"child\":[{\"tag\":\"form\"}]}]}]}", 
+                result.Replace("\r\n", "").Replace(" ", ""));
+        }
+
         private static async Task<JsonizeNode> TestJsonizeAsJsonizeNode()
         {
             if (_html == null)
