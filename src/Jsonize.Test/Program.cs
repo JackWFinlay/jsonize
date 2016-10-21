@@ -141,7 +141,7 @@ namespace Jsonize_Test
         }
 
         [Test]
-        public async Task TestFormNodeShouldBeNode()
+        public void TestFormNodeShouldBeNode()
         {
             JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration();
 
@@ -151,7 +151,7 @@ namespace Jsonize_Test
             Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"tag\":\"html\",\"child\":[{\"tag\":\"head\"},{\"tag\":\"body\",\"child\":[{\"tag\":\"form\"}]}]}]}", 
                 result.Replace("\r\n", "").Replace(" ", ""));
         }
-
+        
         private static async Task<JsonizeNode> TestJsonizeAsJsonizeNode()
         {
             if (_html == null)
