@@ -101,7 +101,7 @@ namespace JackWFinlay.Jsonize
         /// </summary>
         /// <param name="htmlDoc">The <see cref="HtmlDocument"/> to construct the <see cref="Jsonize"/> object with.</param>
         /// <returns>Jsonize object constructed from the html <see cref="string"/></returns>
-        public static Jsonize FromHtmlDocument(string htmlDoc)
+        public static Jsonize FromHtmlDocument(HtmlDocument htmlDoc)
         {
             return new Jsonize(htmlDoc);
         }
@@ -212,17 +212,17 @@ namespace JackWFinlay.Jsonize
                 }
 
                 string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
-
-                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !String.IsNullOrWhiteSpace(innerText))
+                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
                 {
                     if (!htmlNode.HasChildNodes)
-                    {   
-                        childJsonizeNode.Text = innerText;
+                    {
+                        childJsonizeNode.Text = innerText.Equals("") ? null : innerText;
                     }
 
-                    childJsonizeNode.Node = htmlNode.NodeType.ToString();
                     addToParent = true;
                 }
+
+                childJsonizeNode.Node = htmlNode.NodeType.ToString();
 
                 if (htmlNode.HasAttributes)
                 {
@@ -257,19 +257,15 @@ namespace JackWFinlay.Jsonize
 
         private void AddAttributes(HtmlNode htmlNode, JsonizeNode childJsonizeNode)
         {
-            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes as IDictionary<string, object>;
+            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
 
-            List<HtmlAttribute> attributes = htmlNode.Attributes.ToList<HtmlAttribute>();
+            List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
             foreach (HtmlAttribute attribute in attributes)
             {
                 if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
                 {
                     string[] classes = attribute.Value.Split(' ');
-                    List<string> classList = new List<string>();
-                    foreach (string @class in classes)
-                    {
-                        classList.Add(@class);
-                    }
+                    List<string> classList = classes.ToList();
                     attributeDict["class"] = classList;
                 }
                 else

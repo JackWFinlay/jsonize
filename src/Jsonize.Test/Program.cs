@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using NUnit.Common;
 using NUnit.Framework;
 using NUnitLite;
+// ReSharper disable RedundantDefaultMemberInitializer
 
+// ReSharper disable once CheckNamespace
 namespace Jsonize_Test
 {
     public class Program
     {
-        const string TEXTFILE = "WriteText.txt";
-        static string _html = null;
+        private const string TEXTFILE = "WriteText.txt";
+        private static string _html = null;
 
         public static void Main(string[] args)
         {
@@ -32,7 +34,7 @@ namespace Jsonize_Test
         }
 
         [TearDown] 
-        public void Cleanup() 
+        public void Cleanup()
         {
             File.Delete(TEXTFILE);
         }
@@ -46,19 +48,24 @@ namespace Jsonize_Test
             };
 
             string result = await TestJsonizeAsString(jsonizeConfiguration);
+            
             File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
         }
 
         [Test]
-        public async Task TestEmptyTextNodesHandlingIgnore()
+        public void TestEmptyTextNodesHandlingIgnore()
         {
             JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
             {
                 EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore
             };
 
-            string result = await TestJsonizeAsString(jsonizeConfiguration);
-            File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingIgnore\r\n" + result));
+            string html = "<html><head></head><body><form></form><p></p></body></html>";
+            Jsonize jsonize = new Jsonize(html);
+            string result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
+            Console.WriteLine(result);
+            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"},{\"node\":\"Element\",\"tag\":\"p\"}]}]}]}",
+                result.Replace("\r\n", "").Replace(" ", ""));
         }
 
         [Test]
@@ -148,7 +155,7 @@ namespace Jsonize_Test
             Jsonize jsonize = new Jsonize("<html><head></head><body><form></form></body></html>");
             var result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
 
-            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"tag\":\"html\",\"child\":[{\"tag\":\"head\"},{\"tag\":\"body\",\"child\":[{\"tag\":\"form\"}]}]}]}", 
+            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"}]}]}]}", 
                 result.Replace("\r\n", "").Replace(" ", ""));
         }
         
