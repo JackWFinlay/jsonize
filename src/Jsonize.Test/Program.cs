@@ -47,11 +47,11 @@ namespace Jsonize_Test
                 EmptyTextNodeHandling = EmptyTextNodeHandling.Include
             };
 
-            string html = @"<html><head></head><body><form></form><p>&nbsp;</p></body></html>";
+            string html = @"<html><head></head><body><form></form><p> </p></body></html>";
             Jsonize jsonize = new Jsonize(html);
             string result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
             File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
-            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"},{\"node\":\"Element\",\"tag\":\"p\",\"child\":[{\"node\":\"Text\",\"text\":\" \"}]}]}]}]}", //Note: Contains nbsp character!
+            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"},{\"node\":\"Element\",\"tag\":\"p\",\"child\":[{\"node\":\"Text\"}]}]}]}]}",
                 result.Replace("\r\n", "").Replace(" ", ""));
         }
 
