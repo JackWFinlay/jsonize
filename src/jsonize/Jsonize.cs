@@ -211,6 +211,7 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
+                
                 string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
                 if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
                 {

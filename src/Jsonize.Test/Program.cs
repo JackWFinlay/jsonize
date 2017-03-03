@@ -40,16 +40,19 @@ namespace Jsonize_Test
         }
 
         [Test]
-        public async Task TestEmptyTextNodesHandlingInlcude()
+        public void TestEmptyTextNodesHandlingInlcude()
         {
             JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
             {
                 EmptyTextNodeHandling = EmptyTextNodeHandling.Include
             };
 
-            string result = await TestJsonizeAsString(jsonizeConfiguration);
-            
+            string html = @"<html><head></head><body><form></form><p>&nbsp;</p></body></html>";
+            Jsonize jsonize = new Jsonize(html);
+            string result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
             File.AppendAllText(TEXTFILE, ("\r\nTestEmptyTextNodesHandlingInclude\r\n" + result));
+            Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"},{\"node\":\"Element\",\"tag\":\"p\",\"child\":[{\"node\":\"Text\",\"text\":\" \"}]}]}]}]}", //Note: Contains nbsp character!
+                result.Replace("\r\n", "").Replace(" ", ""));
         }
 
         [Test]
@@ -63,7 +66,6 @@ namespace Jsonize_Test
             string html = "<html><head></head><body><form></form><p></p></body></html>";
             Jsonize jsonize = new Jsonize(html);
             string result = jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
-            Console.WriteLine(result);
             Assert.AreEqual("{\"node\":\"Document\",\"child\":[{\"node\":\"Element\",\"tag\":\"html\",\"child\":[{\"node\":\"Element\",\"tag\":\"head\"},{\"node\":\"Element\",\"tag\":\"body\",\"child\":[{\"node\":\"Element\",\"tag\":\"form\"},{\"node\":\"Element\",\"tag\":\"p\"}]}]}]}",
                 result.Replace("\r\n", "").Replace(" ", ""));
         }
@@ -145,6 +147,10 @@ namespace Jsonize_Test
         {
             JsonizeNode result = await TestJsonizeAsJsonizeNode();
             JsonizeMeta jsonizeMeta = new JsonizeMeta(result, @"http://jackfinlay.com/?something=something" );
+
+            Assert.AreEqual( result, jsonizeMeta.DocumentJsonizeNode);
+            Assert.AreEqual("jackfinlay.com", jsonizeMeta.Domain);
+            Assert.AreEqual(@"http://jackfinlay.com/?something=something", jsonizeMeta.Url);
         }
 
         [Test]

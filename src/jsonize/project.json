@@ -4,12 +4,12 @@
   "copyright": "Copyright 2016",
   "description": "Convert HTML to JSON",
   "language": "en",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "authors": [ "Jack Witbrock Finlay" ],
 
   "packOptions": {
     "owners": [ "Jack Witbrock Finlay" ],
-    "releaseNotes": "Fix issue with form tags not being converted correctly.",
+    "releaseNotes": "Fix issue with empty text nodes not being ignored correctly.",
     "repository": { "url": "https://github.com/JackWFinlay/jsonize", "type": "git" },
     "summary": "Convert HTML to JSON",
     "tags": [ "Json", "Html", "Convert" ],

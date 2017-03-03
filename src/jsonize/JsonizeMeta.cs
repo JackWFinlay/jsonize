@@ -19,5 +19,9 @@ namespace JackWFinlay.Jsonize
             Domain = url.Split('/')[2];
             DocumentJsonizeNode = jsonizeNode;
         }
+
+        public JsonizeMeta()
+        {
+        }
     }
 }
