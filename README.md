@@ -45,7 +45,8 @@ JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
 {
     NullValueHandling = NullValueHandling.Ignore,
     EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore,
-    TextTrimHandling = TextTrimHandling.Trim
+    TextTrimHandling = TextTrimHandling.Trim,
+    ClassAttributeHandling = ClassAttributeHandling.Array
 };
 
 return jsonize.ParseHtmlAsJsonString(jsonizeConfiguration);
