@@ -1,7 +1,7 @@
 # Jsonize
 Convert HTML to JSON. Currently available for .NET Framework 4.6, .NET Standard Library 1.6, and .NET Core 1.0. May be compatible with lower versions, any help porting backwards would be great.
 
-Try it out: https://jsonize.jackfinlay.com
+Try it out: http://jsonize.jackfinlay.com
 
 Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/
 
