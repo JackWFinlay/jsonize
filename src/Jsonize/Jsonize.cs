@@ -1,18 +1,22 @@
-﻿using System;
+﻿using AngleSharp;
+using AngleSharp.Parser.Html;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
+//using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static System.Net.WebUtility;
+using AngleSharp.Dom;
 
 namespace JackWFinlay.Jsonize
 {
     public class Jsonize
     {
-        private HtmlDocument _htmlDoc;
+        private  IDocument _htmlDoc;
+        private HtmlParser _htmlParser;
         private EmptyTextNodeHandling _emptyTextNodeHandling;
         private NullValueHandling _nullValueHandling;
         private TextTrimHandling _textTrimHandling;
@@ -22,9 +26,10 @@ namespace JackWFinlay.Jsonize
         /// Gets or sets the <see cref="HtmlDocument"/> for the <see cref="Jsonize"/> object.
         /// </summary>
         /// <value><see cref="HtmlDocument"/></value>
-        public HtmlDocument HtmlDoc
+        public IDocument HtmlDoc
         {
-            get { return _htmlDoc ?? new HtmlDocument(); }
+            //get { return _htmlDoc ?? new Document(); }
+            get { return _htmlDoc; }
             set { _htmlDoc = value; }
         }
 
@@ -35,7 +40,7 @@ namespace JackWFinlay.Jsonize
         public string HtmlString
         {
             get { return _htmlDoc.ToString() ?? ""; }
-            set { _htmlDoc.LoadHtml(value); }
+            //set { ; }
         }
 
         /// <summary>
@@ -44,8 +49,9 @@ namespace JackWFinlay.Jsonize
         public Jsonize()
         {
             // Fix #26: Form tag parsed as a text node.
-            HtmlNode.ElementsFlags.Remove("form");
-            _htmlDoc = _htmlDoc ?? new HtmlDocument();
+            //HtmlNode.ElementsFlags.Remove("form");
+            //_htmlDoc = _htmlDoc ?? new HtmlDocument();
+            _htmlParser = new HtmlParser();
             _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
             _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
             _textTrimHandling = JsonizeConfiguration.DefaultTextTrimHandling;
@@ -53,10 +59,10 @@ namespace JackWFinlay.Jsonize
         }
 
         /// <summary>
-        /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="HtmlDocument"/> .
+        /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="IDocument"/> .
         /// </summary>
-        /// <param name="htmlDoc">HtmlDocument loaded with the html string</param>
-        public Jsonize(HtmlDocument htmlDoc) : this()
+        /// <param name="htmlDoc">IDocument loaded with the html string</param>
+        public Jsonize(IDocument htmlDoc) : this()
         {
             _htmlDoc = htmlDoc;
         }
@@ -67,8 +73,9 @@ namespace JackWFinlay.Jsonize
         /// <param name="html">Html string</param>
         public Jsonize(string html) : this()
         {
-            _htmlDoc = new HtmlDocument();
-            _htmlDoc.LoadHtml(html);
+            _htmlDoc = _htmlParser.Parse(html);
+            // _htmlDoc = new HtmlDocument();
+            // _htmlDoc.LoadHtml(html);
         }
 
         /// <summary>
@@ -101,7 +108,7 @@ namespace JackWFinlay.Jsonize
         /// </summary>
         /// <param name="htmlDoc">The <see cref="HtmlDocument"/> to construct the <see cref="Jsonize"/> object with.</param>
         /// <returns>Jsonize object constructed from the html <see cref="string"/></returns>
-        public static Jsonize FromHtmlDocument(HtmlDocument htmlDoc)
+        public static Jsonize FromHtmlDocument(IDocument htmlDoc)
         {
             return new Jsonize(htmlDoc);
         }
@@ -113,7 +120,7 @@ namespace JackWFinlay.Jsonize
         public JObject ParseHtmlAsJson()
         {
             JsonizeNode parentJsonizeNode = new JsonizeNode();
-            HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
+            INode parentHtmlNode = _htmlDoc.DocumentElement;
 
             parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
             GetChildren(parentJsonizeNode, parentHtmlNode);
@@ -193,9 +200,9 @@ namespace JackWFinlay.Jsonize
             }
         }
 
-        private void GetChildren(JsonizeNode parentJsonizeNode, HtmlNode parentHtmlNode)
+        private void GetChildren(JsonizeNode parentJsonizeNode, INode parentHtmlNode)
         {
-            foreach (HtmlNode htmlNode in parentHtmlNode.ChildNodes)
+            foreach (INode htmlNode in parentHtmlNode.ChildNodes)
             {
                 bool addToParent = false;
                 JsonizeNode childJsonizeNode = new JsonizeNode();
@@ -205,13 +212,12 @@ namespace JackWFinlay.Jsonize
                     parentJsonizeNode.Children = new List<JsonizeNode>();
                 }
 
-                if (!htmlNode.Name.StartsWith("#"))
+                if (htmlNode.NodeType is IElement)
                 {
                     childJsonizeNode.Tag = htmlNode.Name;
                     addToParent = true;
                 }
 
-                
                 string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
                 if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
                 {
