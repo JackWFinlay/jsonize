@@ -202,9 +202,10 @@ Becomes:
 - ~~Add support to directly pass in a URL.~~
 - Add Documentation.
 - Return Exception handling.
-- Upgrade to .NET Core 2.0, including change to .csproj format.
-- Change testing framwork over to xUnit.
-- Name things properly.
+- ~Upgrade to .NET Core 2.0, including change to .csproj format.~
+- ~Change testing framework over to xUnit.~
+- Port tests.
+- ~Name things properly.~
 
 ## License
 MIT
