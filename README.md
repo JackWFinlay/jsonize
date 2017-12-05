@@ -200,12 +200,13 @@ Becomes:
 - ~~Remove formatting issues such as empty child arrays on Script tags with no content.~~ Fixed in 1.0.3
 - ~~Change class attribute to array rather than space separated.~~ Fixed in 1.0.2
 - ~~Add support to directly pass in a URL.~~
-- Add Documentation.
-- Return Exception handling.
 - ~Upgrade to .NET Core 2.0, including change to .csproj format.~
 - ~Change testing framework over to xUnit.~
-- Port tests.
 - ~Name things properly.~
+- Port tests.
+- Add Documentation.
+- Return Exception handling.
+- Log issues in GitHub.
 
 ## License
 MIT
