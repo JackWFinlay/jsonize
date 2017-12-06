@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+using AngleSharp.Attributes;
 using AngleSharp.Parser.Html;
 using System;
 using System.Collections.Generic;
@@ -119,11 +120,7 @@ namespace JackWFinlay.Jsonize
         /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
         public JObject ParseHtmlAsJson()
         {
-            JsonizeNode parentJsonizeNode = new JsonizeNode();
-            INode parentHtmlNode = _htmlDoc.DocumentElement;
-
-            parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
-            GetChildren(parentJsonizeNode, parentHtmlNode);
+            JsonizeNode parentJsonizeNode = ParseHtmlAsJsonizeNode();
 
             JsonSerializer jsonWriter = new JsonSerializer
             {
@@ -139,10 +136,12 @@ namespace JackWFinlay.Jsonize
         public JsonizeNode ParseHtmlAsJsonizeNode()
         {
             JsonizeNode parentJsonizeNode = new JsonizeNode();
-            HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
+            INode parentHtmlNode = _htmlDoc.DocumentElement;
 
             parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
             GetChildren(parentJsonizeNode, parentHtmlNode);
+
+            parentJsonizeNode = SetDocumentAndDoctypeNodes(parentJsonizeNode);
 
             return parentJsonizeNode;
         }
@@ -202,7 +201,7 @@ namespace JackWFinlay.Jsonize
 
         private void GetChildren(JsonizeNode parentJsonizeNode, INode parentHtmlNode)
         {
-            foreach (INode htmlNode in parentHtmlNode.ChildNodes)
+            foreach (INode node in parentHtmlNode.ChildNodes)
             {
                 bool addToParent = false;
                 JsonizeNode childJsonizeNode = new JsonizeNode();
@@ -212,39 +211,33 @@ namespace JackWFinlay.Jsonize
                     parentJsonizeNode.Children = new List<JsonizeNode>();
                 }
 
-                if (htmlNode.NodeType is IElement)
+                switch (node.NodeType)
                 {
-                    childJsonizeNode.Tag = htmlNode.Name;
-                    addToParent = true;
+                    case NodeType.Attribute:
+                        AddAttribute(parentJsonizeNode, node);
+                        break;
+                    case NodeType.DocumentType:
+                        childJsonizeNode.Node = GetNodeTypeName(node);
+                        throw new Exception("in doctype");
+                        //break;
+                    case NodeType.Text:
+                        addToParent = AddTextNode(node, addToParent, childJsonizeNode);
+                        break;
+                    case NodeType.Comment:
+                        childJsonizeNode.Node = GetNodeTypeName(node);
+                        childJsonizeNode.Text = node.TextContent;
+                        break;
+                    default:
+                        childJsonizeNode.Node = GetNodeTypeName(node);
+                        childJsonizeNode.Tag = node.NodeName.ToLowerInvariant();
+                        addToParent = true;
+                        break;
+
                 }
 
-                string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
-                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
+                if (node.HasChildNodes)
                 {
-                    if (!htmlNode.HasChildNodes)
-                    {
-                        childJsonizeNode.Text = innerText.Equals("") ? null : innerText;
-                    }
-
-                    addToParent = true;
-                }
-
-                childJsonizeNode.Node = htmlNode.NodeType.ToString();
-
-                if (htmlNode.HasAttributes)
-                {
-                    if (childJsonizeNode.Attributes == null)
-                    {
-                        childJsonizeNode.Attributes = new System.Dynamic.ExpandoObject();
-                    }
-
-                    AddAttributes(htmlNode, childJsonizeNode);
-                    addToParent = true;
-                }
-
-                if (htmlNode.HasChildNodes)
-                {
-                    GetChildren(childJsonizeNode, htmlNode);
+                    GetChildren(childJsonizeNode, node);
                     addToParent = true;
                 }
 
@@ -262,25 +255,79 @@ namespace JackWFinlay.Jsonize
             }
         }
 
-        private void AddAttributes(HtmlNode htmlNode, JsonizeNode childJsonizeNode)
+        private bool AddTextNode(INode node, bool addToParent, JsonizeNode childJsonizeNode)
         {
-            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
-
-            List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
-            foreach (HtmlAttribute attribute in attributes)
+            childJsonizeNode.Node = GetNodeTypeName(node);
+            string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? node.TextContent.Trim() : node.TextContent);
+            if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
             {
-                if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
+                if (!node.HasChildNodes)
                 {
-                    string[] classes = attribute.Value.Split(' ');
-                    List<string> classList = classes.ToList();
-                    attributeDict["class"] = classList;
+                    childJsonizeNode.Text = innerText.Equals("") ? null : innerText;
                 }
-                else
-                {
-                    attributeDict[attribute.Name] = attribute.Value;
-                }
+
+                addToParent = true;
             }
+
+            return addToParent;
         }
+
+        private static string GetNodeTypeName(INode node)
+        {
+            return Enum.GetName(typeof(NodeType), node.NodeType);
+        }
+
+        private static void AddAttribute(JsonizeNode parentJsonizeNode, INode node)
+        {
+            if (parentJsonizeNode.Attributes == null)
+            {
+                parentJsonizeNode.Attributes = new List<JsonizeHtmlAttribute>();
+            }
+
+            JsonizeHtmlAttribute jsonizeHtmlAttribute = new JsonizeHtmlAttribute(node.NodeName, node.NodeValue);
+            parentJsonizeNode.Attributes.Add(jsonizeHtmlAttribute);
+        }
+
+        private JsonizeNode SetDocumentAndDoctypeNodes(JsonizeNode jsonizeNode)
+        {
+            JsonizeNode documentNode = new JsonizeNode();
+
+            // If has <!DOCTYPE> element
+            if (_htmlDoc.FirstChild.NodeType == NodeType.DocumentType)
+            {
+                JsonizeNode doctypeNode = new JsonizeNode();
+                doctypeNode.Node = GetNodeTypeName(_htmlDoc.Doctype);
+                doctypeNode.Tag = _htmlDoc.Doctype.NodeName;
+                jsonizeNode.Children.Insert(0, doctypeNode);
+            }
+
+            documentNode.Node = "Document";
+            documentNode.Children = new List<JsonizeNode>();
+            documentNode.Children.Add(jsonizeNode);
+            return documentNode;
+        }
+
+        // Deprecated.
+        // private void AddAttributes(INode htmlNode, JsonizeNode childJsonizeNode)
+        // {
+        //     // Gets previously added
+        //     IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
+
+        //     List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
+        //     foreach (HtmlAttribute attribute in attributes)
+        //     {
+        //         if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
+        //         {
+        //             string[] classes = attribute.Value.Split(' ');
+        //             List<string> classList = classes.ToList();
+        //             attributeDict["class"] = classList;
+        //         }
+        //         else
+        //         {
+        //             attributeDict[attribute.Name] = attribute.Value;
+        //         }
+        //     }
+        // }
 
     }
 }

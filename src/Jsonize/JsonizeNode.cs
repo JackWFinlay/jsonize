@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using Newtonsoft.Json;
+using AngleSharp.Dom;
 
 namespace JackWFinlay.Jsonize
 {
@@ -8,7 +9,7 @@ namespace JackWFinlay.Jsonize
     {
         [JsonProperty(PropertyName = "node")]
         public string Node { get; set; }
-        
+
         [JsonProperty(PropertyName = "tag")]
         public string Tag { get; set; }
 
@@ -16,7 +17,7 @@ namespace JackWFinlay.Jsonize
         public string Text { get; set; }
 
         [JsonProperty(PropertyName = "attr")]
-        public ExpandoObject Attributes { get; set; }
+        public List<JsonizeHtmlAttribute> Attributes { get; set; }
 
         [JsonProperty(PropertyName = "child")]
         public List<JsonizeNode> Children { get; set; }
