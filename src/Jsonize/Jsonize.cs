@@ -1,23 +1,18 @@
-﻿using AngleSharp;
-using AngleSharp.Attributes;
-using AngleSharp.Parser.Html;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-//using HtmlAgilityPack;
+using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static System.Net.WebUtility;
-using AngleSharp.Dom;
 
 namespace JackWFinlay.Jsonize
 {
     public class Jsonize
     {
-        private  IDocument _htmlDoc;
-        private HtmlParser _htmlParser;
+        private HtmlDocument _htmlDoc;
         private EmptyTextNodeHandling _emptyTextNodeHandling;
         private NullValueHandling _nullValueHandling;
         private TextTrimHandling _textTrimHandling;
@@ -27,10 +22,9 @@ namespace JackWFinlay.Jsonize
         /// Gets or sets the <see cref="HtmlDocument"/> for the <see cref="Jsonize"/> object.
         /// </summary>
         /// <value><see cref="HtmlDocument"/></value>
-        public IDocument HtmlDoc
+        public HtmlDocument HtmlDoc
         {
-            //get { return _htmlDoc ?? new Document(); }
-            get { return _htmlDoc; }
+            get { return _htmlDoc ?? new HtmlDocument(); }
             set { _htmlDoc = value; }
         }
 
@@ -41,7 +35,7 @@ namespace JackWFinlay.Jsonize
         public string HtmlString
         {
             get { return _htmlDoc.ToString() ?? ""; }
-            //set { ; }
+            set { _htmlDoc.LoadHtml(value); }
         }
 
         /// <summary>
@@ -50,9 +44,8 @@ namespace JackWFinlay.Jsonize
         public Jsonize()
         {
             // Fix #26: Form tag parsed as a text node.
-            //HtmlNode.ElementsFlags.Remove("form");
-            //_htmlDoc = _htmlDoc ?? new HtmlDocument();
-            _htmlParser = new HtmlParser();
+            HtmlNode.ElementsFlags.Remove("form");
+            _htmlDoc = _htmlDoc ?? new HtmlDocument();
             _emptyTextNodeHandling = JsonizeConfiguration.DefaultEmptyTextNodeHandling;
             _nullValueHandling = JsonizeConfiguration.DefaultNullValueHandling;
             _textTrimHandling = JsonizeConfiguration.DefaultTextTrimHandling;
@@ -60,10 +53,10 @@ namespace JackWFinlay.Jsonize
         }
 
         /// <summary>
-        /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="IDocument"/> .
+        /// Constructs a <see cref="Jsonize"/> object with the supplied <see cref="HtmlDocument"/> .
         /// </summary>
-        /// <param name="htmlDoc">IDocument loaded with the html string</param>
-        public Jsonize(IDocument htmlDoc) : this()
+        /// <param name="htmlDoc">HtmlDocument loaded with the html string</param>
+        public Jsonize(HtmlDocument htmlDoc) : this()
         {
             _htmlDoc = htmlDoc;
         }
@@ -74,9 +67,8 @@ namespace JackWFinlay.Jsonize
         /// <param name="html">Html string</param>
         public Jsonize(string html) : this()
         {
-            _htmlDoc = _htmlParser.Parse(html);
-            // _htmlDoc = new HtmlDocument();
-            // _htmlDoc.LoadHtml(html);
+            _htmlDoc = new HtmlDocument();
+            _htmlDoc.LoadHtml(html);
         }
 
         /// <summary>
@@ -109,7 +101,7 @@ namespace JackWFinlay.Jsonize
         /// </summary>
         /// <param name="htmlDoc">The <see cref="HtmlDocument"/> to construct the <see cref="Jsonize"/> object with.</param>
         /// <returns>Jsonize object constructed from the html <see cref="string"/></returns>
-        public static Jsonize FromHtmlDocument(IDocument htmlDoc)
+        public static Jsonize FromHtmlDocument(HtmlDocument htmlDoc)
         {
             return new Jsonize(htmlDoc);
         }
@@ -120,7 +112,11 @@ namespace JackWFinlay.Jsonize
         /// <returns>The JSON representation of an HTML document as a <see cref="JObject"/>.</returns>
         public JObject ParseHtmlAsJson()
         {
-            JsonizeNode parentJsonizeNode = ParseHtmlAsJsonizeNode();
+            JsonizeNode parentJsonizeNode = new JsonizeNode();
+            HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
+
+            parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
+            GetChildren(parentJsonizeNode, parentHtmlNode);
 
             JsonSerializer jsonWriter = new JsonSerializer
             {
@@ -136,12 +132,10 @@ namespace JackWFinlay.Jsonize
         public JsonizeNode ParseHtmlAsJsonizeNode()
         {
             JsonizeNode parentJsonizeNode = new JsonizeNode();
-            INode parentHtmlNode = _htmlDoc.DocumentElement;
+            HtmlNode parentHtmlNode = _htmlDoc.DocumentNode;
 
             parentJsonizeNode.Node = parentHtmlNode.NodeType.ToString();
             GetChildren(parentJsonizeNode, parentHtmlNode);
-
-            parentJsonizeNode = SetDocumentAndDoctypeNodes(parentJsonizeNode);
 
             return parentJsonizeNode;
         }
@@ -199,9 +193,9 @@ namespace JackWFinlay.Jsonize
             }
         }
 
-        private void GetChildren(JsonizeNode parentJsonizeNode, INode parentHtmlNode)
+        private void GetChildren(JsonizeNode parentJsonizeNode, HtmlNode parentHtmlNode)
         {
-            foreach (INode node in parentHtmlNode.ChildNodes)
+            foreach (HtmlNode htmlNode in parentHtmlNode.ChildNodes)
             {
                 bool addToParent = false;
                 JsonizeNode childJsonizeNode = new JsonizeNode();
@@ -211,33 +205,40 @@ namespace JackWFinlay.Jsonize
                     parentJsonizeNode.Children = new List<JsonizeNode>();
                 }
 
-                switch (node.NodeType)
+                if (!htmlNode.Name.StartsWith("#"))
                 {
-                    case NodeType.Attribute:
-                        AddAttribute(parentJsonizeNode, node);
-                        break;
-                    case NodeType.DocumentType:
-                        childJsonizeNode.Node = GetNodeTypeName(node);
-                        throw new Exception("in doctype");
-                        //break;
-                    case NodeType.Text:
-                        addToParent = AddTextNode(node, addToParent, childJsonizeNode);
-                        break;
-                    case NodeType.Comment:
-                        childJsonizeNode.Node = GetNodeTypeName(node);
-                        childJsonizeNode.Text = node.TextContent;
-                        break;
-                    default:
-                        childJsonizeNode.Node = GetNodeTypeName(node);
-                        childJsonizeNode.Tag = node.NodeName.ToLowerInvariant();
-                        addToParent = true;
-                        break;
-
+                    childJsonizeNode.Tag = htmlNode.Name;
+                    addToParent = true;
                 }
 
-                if (node.HasChildNodes)
+                
+                string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
+                if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
                 {
-                    GetChildren(childJsonizeNode, node);
+                    if (!htmlNode.HasChildNodes)
+                    {
+                        childJsonizeNode.Text = innerText.Equals("") ? null : innerText;
+                    }
+
+                    addToParent = true;
+                }
+
+                childJsonizeNode.Node = htmlNode.NodeType.ToString();
+
+                if (htmlNode.HasAttributes)
+                {
+                    if (childJsonizeNode.Attributes == null)
+                    {
+                        childJsonizeNode.Attributes = new System.Dynamic.ExpandoObject();
+                    }
+
+                    AddAttributes(htmlNode, childJsonizeNode);
+                    addToParent = true;
+                }
+
+                if (htmlNode.HasChildNodes)
+                {
+                    GetChildren(childJsonizeNode, htmlNode);
                     addToParent = true;
                 }
 
@@ -255,79 +256,25 @@ namespace JackWFinlay.Jsonize
             }
         }
 
-        private bool AddTextNode(INode node, bool addToParent, JsonizeNode childJsonizeNode)
+        private void AddAttributes(HtmlNode htmlNode, JsonizeNode childJsonizeNode)
         {
-            childJsonizeNode.Node = GetNodeTypeName(node);
-            string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? node.TextContent.Trim() : node.TextContent);
-            if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
+            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
+
+            List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
+            foreach (HtmlAttribute attribute in attributes)
             {
-                if (!node.HasChildNodes)
+                if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
                 {
-                    childJsonizeNode.Text = innerText.Equals("") ? null : innerText;
+                    string[] classes = attribute.Value.Split(' ');
+                    List<string> classList = classes.ToList();
+                    attributeDict["class"] = classList;
                 }
-
-                addToParent = true;
+                else
+                {
+                    attributeDict[attribute.Name] = attribute.Value;
+                }
             }
-
-            return addToParent;
         }
-
-        private static string GetNodeTypeName(INode node)
-        {
-            return Enum.GetName(typeof(NodeType), node.NodeType);
-        }
-
-        private static void AddAttribute(JsonizeNode parentJsonizeNode, INode node)
-        {
-            if (parentJsonizeNode.Attributes == null)
-            {
-                parentJsonizeNode.Attributes = new List<JsonizeHtmlAttribute>();
-            }
-
-            JsonizeHtmlAttribute jsonizeHtmlAttribute = new JsonizeHtmlAttribute(node.NodeName, node.NodeValue);
-            parentJsonizeNode.Attributes.Add(jsonizeHtmlAttribute);
-        }
-
-        private JsonizeNode SetDocumentAndDoctypeNodes(JsonizeNode jsonizeNode)
-        {
-            JsonizeNode documentNode = new JsonizeNode();
-
-            // If has <!DOCTYPE> element
-            if (_htmlDoc.FirstChild.NodeType == NodeType.DocumentType)
-            {
-                JsonizeNode doctypeNode = new JsonizeNode();
-                doctypeNode.Node = GetNodeTypeName(_htmlDoc.Doctype);
-                doctypeNode.Tag = _htmlDoc.Doctype.NodeName;
-                jsonizeNode.Children.Insert(0, doctypeNode);
-            }
-
-            documentNode.Node = "Document";
-            documentNode.Children = new List<JsonizeNode>();
-            documentNode.Children.Add(jsonizeNode);
-            return documentNode;
-        }
-
-        // Deprecated.
-        // private void AddAttributes(INode htmlNode, JsonizeNode childJsonizeNode)
-        // {
-        //     // Gets previously added
-        //     IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
-
-        //     List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
-        //     foreach (HtmlAttribute attribute in attributes)
-        //     {
-        //         if (attribute.Name.Equals("class") && _classAttributeHandling == ClassAttributeHandling.Array)
-        //         {
-        //             string[] classes = attribute.Value.Split(' ');
-        //             List<string> classList = classes.ToList();
-        //             attributeDict["class"] = classList;
-        //         }
-        //         else
-        //         {
-        //             attributeDict[attribute.Name] = attribute.Value;
-        //         }
-        //     }
-        // }
 
     }
 }
