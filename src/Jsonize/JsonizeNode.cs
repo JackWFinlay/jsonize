@@ -16,7 +16,7 @@ namespace JackWFinlay.Jsonize
         public string Text { get; set; }
 
         [JsonProperty(PropertyName = "attr")]
-        public ExpandoObject Attributes { get; set; }
+        public Dictionary<string,object> Attributes { get; set; }
 
         [JsonProperty(PropertyName = "child")]
         public List<JsonizeNode> Children { get; set; }

@@ -211,7 +211,6 @@ namespace JackWFinlay.Jsonize
                     addToParent = true;
                 }
 
-                
                 string innerText = HtmlDecode(_textTrimHandling == TextTrimHandling.Trim ? htmlNode.InnerText.Trim() : htmlNode.InnerText);
                 if (_emptyTextNodeHandling == EmptyTextNodeHandling.Include || !string.IsNullOrWhiteSpace(innerText))
                 {
@@ -229,7 +228,7 @@ namespace JackWFinlay.Jsonize
                 {
                     if (childJsonizeNode.Attributes == null)
                     {
-                        childJsonizeNode.Attributes = new System.Dynamic.ExpandoObject();
+                        childJsonizeNode.Attributes = new Dictionary<string,object>();
                     }
 
                     AddAttributes(htmlNode, childJsonizeNode);
@@ -258,7 +257,7 @@ namespace JackWFinlay.Jsonize
 
         private void AddAttributes(HtmlNode htmlNode, JsonizeNode childJsonizeNode)
         {
-            IDictionary<string, object> attributeDict = childJsonizeNode.Attributes;
+            Dictionary<string, object> attributeDict = childJsonizeNode.Attributes;
 
             List<HtmlAttribute> attributes = htmlNode.Attributes.ToList();
             foreach (HtmlAttribute attribute in attributes)
