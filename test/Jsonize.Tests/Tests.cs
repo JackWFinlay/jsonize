@@ -43,7 +43,7 @@ namespace JackWFinlay.Jsonize.Tests
             const string expected =
                 "{\\\"node\\\":\\\"Document\\\",\\\"child\\\":[{\\\"node\\\":\\\"Element\\\",\\\"tag\\\":\\\"html\\\",\\\"child\\\":[{\\\"node\\\":\\\"Element\\\",\\\"tag\\\":\\\"head\\\"},{\\\"node\\\":\\\"Element\\\",\\\"tag\\\":\\\"body\\\",\\\"child\\\":[{\\\"node\\\":\\\"Element\\\",\\\"tag\\\":\\\"form\\\"},{\\\"node\\\":\\\"Element\\\",\\\"tag\\\":\\\"p\\\",\\\"child\\\":[{\\\"node\\\":\\\"Text\\\"}]}]}]}]}";
                 
-            Assert.Equal(expected, actual);
+            Equal(expected, actual);
         }
         
         private static async Task<string> CleanOutput(string rawString)
