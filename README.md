@@ -198,7 +198,16 @@ Becomes:
   ]
 }
 ```
+##
+```
+ClassAttributeHandling
 
+This is another enum Specifies handling of the class attributes on a Node during conversion.
+can be used as 
+ClassAttributeHandling.Array
+ClassAttributeHandling.String
+
+```
 
 
 ## TODO:
