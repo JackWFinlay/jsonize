@@ -199,8 +199,15 @@ Becomes:
 }
 ```
 
+## Usage
+```C#
+EmptyTextNodeHandling
 
-
+This is an enum value
+can be used as EmptyTextNodeHandling.Include 
+or 
+EmptyTextNodeHandling.Ignore
+```
 ## TODO:
 - ~~Port to .Net 4.6.~~ Fixed in 1.0.5
 - ~~Remove formatting issues such as empty child arrays on Script tags with no content.~~ Fixed in 1.0.3
