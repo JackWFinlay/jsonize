@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
-using AngleSharp.Text;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
 using JackWFinlay.Jsonize.Abstractions.Models;
 using JackWFinlay.Jsonize.Configuration;
@@ -48,7 +47,8 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
             JsonizeNode parentNode = new JsonizeNode()
             {
                 Node = documentNode.NodeName,
-                Attributes = GetAttributes(documentNode.Attributes)
+                Attributes = GetAttributes(documentNode.Attributes),
+                Children = new List<JsonizeNode>()
             };
 
             await GetChildNodesAsync(parentNode, documentNode);
@@ -58,51 +58,47 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
 
         private async Task GetChildNodesAsync(JsonizeNode parentNode, IElement element)
         {
-            List<JsonizeNode> childJsonizeNodes = new List<JsonizeNode>();
-                
             // No point trying to parse children that don't exist.
             if (!element.Children.Any())
             {
-                parentNode.Children = null;
                 return;
             }
-            
-            JsonizeNode childJsonizeNode = new JsonizeNode();
 
             foreach (IElement childElement in element.Children)
             {
-                childJsonizeNode.Node = element.NodeType.ToString();
-                childJsonizeNode.Tag = element.TagName;
-                childJsonizeNode.Text = GetInnerText(element);
-                childJsonizeNode.Attributes = GetAttributes(element.Attributes);
+                JsonizeNode childJsonizeNode = new JsonizeNode();
+                
+                childJsonizeNode.Node = childElement.NodeType.ToString();
+                childJsonizeNode.Tag = childElement.TagName;
+                childJsonizeNode.Text = GetInnerText(childElement);
+                childJsonizeNode.Attributes = GetAttributes(childElement.Attributes);
 
                 if (childElement.HasChildNodes)
                 {
+                    childJsonizeNode.Children = new List<JsonizeNode>();
                     await GetChildNodesAsync(childJsonizeNode, childElement);
                 }
 
-                childJsonizeNodes.Add(childJsonizeNode);
+                parentNode.Children.Add(childJsonizeNode);
             }
-
-            parentNode.Children = childJsonizeNodes;
         }
 
         private string GetInnerText(IElement element)
         {
             string innerText = _jsonizeConfiguration.TextTrimHandling == TextTrimHandling.Trim
-                ? element.TextContent.Trim()
-                : element.TextContent;
-
-            if (_jsonizeConfiguration.EmptyTextNodeHandling != EmptyTextNodeHandling.Include
-                && string.IsNullOrWhiteSpace(innerText))
+                ? element.GetInnerText().Trim()
+                : element.GetInnerText();
+            
+            // Return innerText if it has a value, else we have to check the EmptyTextNodeHandling setting.
+            if (!string.IsNullOrWhiteSpace(innerText))
             {
                 return innerText;
             }
-            
-            if (!element.HasChildNodes)
-            {
-                innerText = innerText.Equals("") ? null : innerText;
-            }
+
+            // innerText is null here, if we still want to include the text node, we return one with an empty string in it.
+            innerText = _jsonizeConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Include 
+                ? string.Empty 
+                : null;
 
             return innerText;
         }
