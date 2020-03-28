@@ -4,9 +4,9 @@ using JackWFinlay.Jsonize.Abstractions.Models;
 
 namespace JackWFinlay.Jsonize.Test
 {
-    public class JsonizeNodeTestResources
+    public static class JsonizeNodeTestResources
     {
-        public JsonizeNode HtmlBodyP = new JsonizeNode()
+        public static JsonizeNode HtmlBodyP = new JsonizeNode()
         {
             Node = "document",
             Tag = "html",
@@ -15,6 +15,31 @@ namespace JackWFinlay.Jsonize.Test
             Children = new List<JsonizeNode>()
             {
                 new JsonizeNode()
+                {
+                    Node = "element",
+                    Tag = "head",
+                    Attributes = new Dictionary<string, object>(),
+                    Text = null,
+                    Children = Enumerable.Empty<JsonizeNode>()
+                },
+                new JsonizeNode()
+                {
+                    Node = "element",
+                    Tag = "body",
+                    Attributes = new Dictionary<string, object>(),
+                    Text = "test",
+                    Children = new List<JsonizeNode>()
+                    {
+                        new JsonizeNode()
+                        {
+                            Node = "element",
+                            Tag = "p",
+                            Attributes = new Dictionary<string, object>(),
+                            Text = "test",
+                            Children = Enumerable.Empty<JsonizeNode>()
+                        }
+                    }
+                }
             }
         };
     }

@@ -1,9 +1,9 @@
 using System;
 using JackWFinlay.Jsonize.Abstractions.Exceptions;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
-using JackWFinlay.Jsonize.Abstractions.Models;
+using JackWFinlay.Jsonize.Configuration;
 
-namespace JackWFinlay.Jsonize.Configuration
+namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {
     public class JsonizeConfiguration
     {

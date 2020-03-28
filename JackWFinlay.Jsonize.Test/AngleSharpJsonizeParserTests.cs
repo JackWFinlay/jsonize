@@ -19,7 +19,6 @@ namespace JackWFinlay.Jsonize.Test
         public async Task HtmlBodyPStringResource_DefaultConfiguration_ReturnsJsonizeNode()
         {
             JsonizeNode actual = await _testFixture.JsonizeParser.ParseAsync(StringResources.HtmlBodyP);
-
         }
     }
 }

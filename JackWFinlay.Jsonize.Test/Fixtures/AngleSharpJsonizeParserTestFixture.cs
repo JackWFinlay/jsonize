@@ -1,5 +1,5 @@
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
-using JackWFinlay.Jsonize.Parser.AngleSharpParser;
+using JackWFinlay.Jsonize.Parser.AngleSharp;
 
 namespace JackWFinlay.Jsonize.Test.Fixtures
 {

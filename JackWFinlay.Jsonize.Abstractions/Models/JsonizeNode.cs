@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using JackWFinlay.Jsonize.Attributes;
 
 namespace JackWFinlay.Jsonize.Abstractions.Models
@@ -18,6 +19,6 @@ namespace JackWFinlay.Jsonize.Abstractions.Models
         public IDictionary<string,object> Attributes { get; set; }
 
         [JsonizePropertyName("child")]
-        public List<JsonizeNode> Children { get; set; }
+        public IEnumerable<JsonizeNode> Children { get; set; } = Enumerable.Empty<JsonizeNode>();
     }
 }

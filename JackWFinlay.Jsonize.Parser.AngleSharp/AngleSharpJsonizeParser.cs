@@ -1,23 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
+using JackWFinlay.Jsonize.Abstractions.Configuration;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
 using JackWFinlay.Jsonize.Abstractions.Models;
 using JackWFinlay.Jsonize.Configuration;
 
-namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
+namespace JackWFinlay.Jsonize.Parser.AngleSharp
 {
     public class AngleSharpJsonizeParser : IJsonizeParser
     {
-        private IBrowsingContext _browsingContext;
-        private JsonizeConfiguration _jsonizeConfiguration;
+        private readonly IBrowsingContext _browsingContext;
+        private readonly JsonizeConfiguration _jsonizeConfiguration;
         
         public AngleSharpJsonizeParser()
         {
-            IConfiguration configuration = new AngleSharp.Configuration().WithJs().WithCss();
+            IConfiguration configuration = new global::AngleSharp.Configuration().WithJs().WithCss();
             _browsingContext = new BrowsingContext(configuration);
 
             _jsonizeConfiguration = new JsonizeConfiguration();
@@ -47,8 +49,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
             JsonizeNode parentNode = new JsonizeNode()
             {
                 Node = documentNode.NodeName,
-                Attributes = GetAttributes(documentNode.Attributes),
-                Children = new List<JsonizeNode>()
+                Attributes = GetAttributes(documentNode.Attributes)
             };
 
             await GetChildNodesAsync(parentNode, documentNode);
@@ -64,23 +65,26 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
                 return;
             }
 
+            List<JsonizeNode> childNodes = new List<JsonizeNode>();
+            
             foreach (IElement childElement in element.Children)
             {
                 JsonizeNode childJsonizeNode = new JsonizeNode();
                 
-                childJsonizeNode.Node = childElement.NodeType.ToString();
-                childJsonizeNode.Tag = childElement.TagName;
+                childJsonizeNode.Node = childElement.NodeType.ToString().ToLowerInvariant();
+                childJsonizeNode.Tag = childElement.TagName.ToLowerInvariant();
                 childJsonizeNode.Text = GetInnerText(childElement);
                 childJsonizeNode.Attributes = GetAttributes(childElement.Attributes);
 
                 if (childElement.HasChildNodes)
                 {
-                    childJsonizeNode.Children = new List<JsonizeNode>();
                     await GetChildNodesAsync(childJsonizeNode, childElement);
                 }
 
-                parentNode.Children.Add(childJsonizeNode);
+                childNodes.Add(childJsonizeNode);
             }
+
+            parentNode.Children = childNodes;
         }
 
         private string GetInnerText(IElement element)
@@ -109,7 +113,8 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharpParser
 
             foreach (var attribute in attributeMap)
             {
-                if (attribute.Name.Equals("class") && _jsonizeConfiguration.ClassAttributeHandling == ClassAttributeHandling.Array)
+                if (attribute.Name.Equals("class", StringComparison.InvariantCultureIgnoreCase)
+                    && _jsonizeConfiguration.ClassAttributeHandling == ClassAttributeHandling.Array)
                 {
                     IEnumerable<string> classList = ParseClassList(attribute);
                     attributes.Add(attribute.Name, classList);
