@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JackWFinlay.Jsonize.Abstractions\JackWFinlay.Jsonize.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AngleSharp" Version="0.14.0-alpha-811" />
+      <PackageReference Include="AngleSharp.Css" Version="0.13.0" />
+      <PackageReference Include="AngleSharp.Js" Version="0.13.0" />
+    </ItemGroup>
+
+</Project>

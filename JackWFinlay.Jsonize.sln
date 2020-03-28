@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize", "JackWFinlay.Jsonize\JackWFinlay.Jsonize.csproj", "{87563107-7709-4525-B289-06DD9F1CAD52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize.Abstractions", "JackWFinlay.Jsonize.Abstractions\JackWFinlay.Jsonize.Abstractions.csproj", "{D7C8BF60-4BF7-4626-BE85-718DEB3ECC78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize.Parser.AngleSharp", "JackWFinlay.Jsonize.Parser.AngleSharp\JackWFinlay.Jsonize.Parser.AngleSharp.csproj", "{E7CDC8D8-C63A-40FC-8DBD-228198DCAD76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87563107-7709-4525-B289-06DD9F1CAD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87563107-7709-4525-B289-06DD9F1CAD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87563107-7709-4525-B289-06DD9F1CAD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87563107-7709-4525-B289-06DD9F1CAD52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7C8BF60-4BF7-4626-BE85-718DEB3ECC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C8BF60-4BF7-4626-BE85-718DEB3ECC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C8BF60-4BF7-4626-BE85-718DEB3ECC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C8BF60-4BF7-4626-BE85-718DEB3ECC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7CDC8D8-C63A-40FC-8DBD-228198DCAD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7CDC8D8-C63A-40FC-8DBD-228198DCAD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7CDC8D8-C63A-40FC-8DBD-228198DCAD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7CDC8D8-C63A-40FC-8DBD-228198DCAD76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
