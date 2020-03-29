@@ -1,42 +1,61 @@
 using System.Collections.Generic;
 using System.Linq;
+using JackWFinlay.Jsonize.Abstractions.Configuration;
 using JackWFinlay.Jsonize.Abstractions.Models;
 
 namespace JackWFinlay.Jsonize.Test
 {
     public static class JsonizeNodeTestResources
     {
-        public static JsonizeNode HtmlBodyP = new JsonizeNode()
+        public static readonly JsonizeNode HtmlBodyP = new JsonizeNode()
         {
-            Node = "document",
-            Tag = "html",
+            Node = "Document",
             Attributes = new Dictionary<string,object>(),
             Text = null,
             Children = new List<JsonizeNode>()
             {
                 new JsonizeNode()
                 {
-                    Node = "element",
-                    Tag = "head",
                     Attributes = new Dictionary<string, object>(),
-                    Text = null,
+                    Node = "DocumentType",
+                    Tag = "html",
                     Children = Enumerable.Empty<JsonizeNode>()
                 },
                 new JsonizeNode()
                 {
-                    Node = "element",
-                    Tag = "body",
                     Attributes = new Dictionary<string, object>(),
-                    Text = "test",
+                    Node = "Element",
+                    Tag = "html",
                     Children = new List<JsonizeNode>()
                     {
                         new JsonizeNode()
                         {
-                            Node = "element",
-                            Tag = "p",
+                            Node = "Element",
+                            Tag = "head",
                             Attributes = new Dictionary<string, object>(),
-                            Text = "test",
+                            Text = null,
                             Children = Enumerable.Empty<JsonizeNode>()
+                        },
+                        new JsonizeNode()
+                        {
+                            Node = "Element",
+                            Tag = "body",
+                            Attributes = new Dictionary<string, object>(),
+                            Text = null,
+                            Children = new List<JsonizeNode>()
+                            {
+                                new JsonizeNode()
+                                {
+                                    Node = "Element",
+                                    Tag = "p",
+                                    Attributes = new Dictionary<string, object>()
+                                    {
+                                        {"class", new List<string>(){"test-class"}}
+                                    },
+                                    Text = "test",
+                                    Children = Enumerable.Empty<JsonizeNode>()
+                                }
+                            }
                         }
                     }
                 }

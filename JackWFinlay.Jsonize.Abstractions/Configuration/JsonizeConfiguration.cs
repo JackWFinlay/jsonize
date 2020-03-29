@@ -1,7 +1,6 @@
 using System;
 using JackWFinlay.Jsonize.Abstractions.Exceptions;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
-using JackWFinlay.Jsonize.Configuration;
 
 namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {

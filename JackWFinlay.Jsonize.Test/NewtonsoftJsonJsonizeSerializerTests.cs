@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FluentAssertions;
 using JackWFinlay.Jsonize.Test.Fixtures;
 using Xunit;
 
@@ -17,6 +18,10 @@ namespace JackWFinlay.Jsonize.Test
         public async Task Serialize_DefaultSettings_SerializesCorrectly()
         {
             string actual = await _testFixture.JsonizeSerializer.Serialize(JsonizeNodeTestResources.HtmlBodyP);
+
+            actual
+                .Should()
+                .Be(StringResources.HtmlBodyPResult);
         }
     }
 }

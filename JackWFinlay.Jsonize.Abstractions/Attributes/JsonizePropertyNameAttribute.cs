@@ -10,7 +10,7 @@ namespace JackWFinlay.Jsonize.Attributes
         /// <summary>
         /// The custom name to use during serialization.
         /// </summary>
-        internal string Name { get; }
+        public string Name { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="JsonizePropertyNameAttribute"/> with the specified property name.

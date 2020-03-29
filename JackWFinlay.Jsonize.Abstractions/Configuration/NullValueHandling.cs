@@ -1,4 +1,4 @@
-namespace JackWFinlay.Jsonize.Configuration
+namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {
     /// <summary>
     /// Specifies handling of keys that have null values.

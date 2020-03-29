@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JackWFinlay.Jsonize.Abstractions.Configuration;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
 using JackWFinlay.Jsonize.Abstractions.Models;
-using JackWFinlay.Jsonize.Configuration;
 
 namespace JackWFinlay.Jsonize
 {

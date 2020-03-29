@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp;
@@ -8,7 +7,6 @@ using AngleSharp.Dom;
 using JackWFinlay.Jsonize.Abstractions.Configuration;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
 using JackWFinlay.Jsonize.Abstractions.Models;
-using JackWFinlay.Jsonize.Configuration;
 
 namespace JackWFinlay.Jsonize.Parser.AngleSharp
 {
@@ -19,7 +17,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         
         public AngleSharpJsonizeParser()
         {
-            IConfiguration configuration = new global::AngleSharp.Configuration().WithJs().WithCss();
+            IConfiguration configuration = new Configuration().WithJs().WithCss();
             _browsingContext = new BrowsingContext(configuration);
 
             _jsonizeConfiguration = new JsonizeConfiguration();
@@ -44,12 +42,12 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         {
             IDocument document = await _browsingContext.OpenAsync(req => req.Content(htmlString));
 
-            var documentNode = document.DocumentElement;
+            var documentNode = document.GetRoot();
 
             JsonizeNode parentNode = new JsonizeNode()
             {
-                Node = documentNode.NodeName,
-                Attributes = GetAttributes(documentNode.Attributes)
+                Node = "Document",
+                Attributes = new Dictionary<string, object>()
             };
 
             await GetChildNodesAsync(parentNode, documentNode);
@@ -57,28 +55,58 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             return parentNode;
         }
 
-        private async Task GetChildNodesAsync(JsonizeNode parentNode, IElement element)
+        private async Task GetChildNodesAsync(JsonizeNode parentNode, INode element)
         {
             // No point trying to parse children that don't exist.
-            if (!element.Children.Any())
+            if (!element.Descendents().Any())
             {
                 return;
             }
 
             List<JsonizeNode> childNodes = new List<JsonizeNode>();
             
-            foreach (IElement childElement in element.Children)
+            foreach (INode childNode in element.Descendents())
             {
-                JsonizeNode childJsonizeNode = new JsonizeNode();
-                
-                childJsonizeNode.Node = childElement.NodeType.ToString().ToLowerInvariant();
-                childJsonizeNode.Tag = childElement.TagName.ToLowerInvariant();
-                childJsonizeNode.Text = GetInnerText(childElement);
-                childJsonizeNode.Attributes = GetAttributes(childElement.Attributes);
-
-                if (childElement.HasChildNodes)
+                // Only process direct descendents.
+                // Unfortunately elements.Descendents returns the entire tree of descendents.
+                // This is a problem as we need to use it to get children as an INode object,
+                // so we can get all the Nodes (including doctype, comments, text, etc.),
+                // not just elements (html, body, p, etc.).
+                if (!childNode.Parent.Equals(element))
                 {
-                    await GetChildNodesAsync(childJsonizeNode, childElement);
+                    continue;
+                }
+
+                NodeType nodeType = childNode.NodeType;
+                string innerText = GetInnerText(childNode);
+
+                if (_jsonizeConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Ignore
+                    && nodeType == NodeType.Text
+                    && string.IsNullOrWhiteSpace(innerText)
+                )
+                {
+                    continue;
+                }
+
+                
+                IDictionary<string, object> attributes = new Dictionary<string, object>();
+
+                if (childNode is IElement childElement)
+                {
+                    attributes = GetAttributes(childElement.Attributes?.ToList());
+                }
+
+                JsonizeNode childJsonizeNode = new JsonizeNode
+                {
+                    Node = nodeType.ToString(),
+                    Tag = childNode.NodeName.ToLowerInvariant(),
+                    Text = innerText,
+                    Attributes = attributes
+                };
+
+                if (childNode.HasChildNodes)
+                {
+                    await GetChildNodesAsync(childJsonizeNode, childNode);
                 }
 
                 childNodes.Add(childJsonizeNode);
@@ -87,11 +115,13 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             parentNode.Children = childNodes;
         }
 
-        private string GetInnerText(IElement element)
+        private string GetInnerText(INode element)
         {
-            string innerText = _jsonizeConfiguration.TextTrimHandling == TextTrimHandling.Trim
-                ? element.GetInnerText().Trim()
-                : element.GetInnerText();
+            string innerText = element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault();
+            
+            innerText = _jsonizeConfiguration.TextTrimHandling == TextTrimHandling.Trim
+                ? innerText?.Trim()
+                : innerText;
             
             // Return innerText if it has a value, else we have to check the EmptyTextNodeHandling setting.
             if (!string.IsNullOrWhiteSpace(innerText))
@@ -107,11 +137,11 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             return innerText;
         }
 
-        private IDictionary<string, object> GetAttributes(INamedNodeMap attributeMap)
+        private IDictionary<string, object> GetAttributes(IEnumerable<IAttr> attributesList)
         {
             IDictionary<string, object> attributes = new Dictionary<string, object>();
 
-            foreach (var attribute in attributeMap)
+            foreach (IAttr attribute in attributesList)
             {
                 if (attribute.Name.Equals("class", StringComparison.InvariantCultureIgnoreCase)
                     && _jsonizeConfiguration.ClassAttributeHandling == ClassAttributeHandling.Array)
@@ -128,7 +158,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             return attributes;
         }
 
-        private IEnumerable<string> ParseClassList(IAttr attribute)
+        private static IEnumerable<string> ParseClassList(IAttr attribute)
         {
             string trimmed = attribute.Value.Trim();
             List<string> classList = trimmed.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();

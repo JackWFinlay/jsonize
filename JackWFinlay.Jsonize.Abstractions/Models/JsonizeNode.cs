@@ -18,7 +18,7 @@ namespace JackWFinlay.Jsonize.Abstractions.Models
         [JsonizePropertyName("attr")]
         public IDictionary<string,object> Attributes { get; set; }
 
-        [JsonizePropertyName("child")]
+        [JsonizePropertyName("children")]
         public IEnumerable<JsonizeNode> Children { get; set; } = Enumerable.Empty<JsonizeNode>();
     }
 }

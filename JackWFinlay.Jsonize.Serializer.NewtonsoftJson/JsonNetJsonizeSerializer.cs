@@ -12,13 +12,21 @@ namespace JackWFinlay.Jsonize.Serializer.NewtonsoftJson
 
         public NewtonsoftJsonJsonizeSerializer()
         {
-            _jsonSerializerSettings = new JsonSerializerSettings();
-            _jsonSerializerSettings.
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = CustomPropertyNameContractResolver.Instance
+            };
+
         }
 
         public NewtonsoftJsonJsonizeSerializer(JsonSerializerSettings jsonSerializerSettings) : this()
         {
             _jsonSerializerSettings = jsonSerializerSettings;
+
+            if (_jsonSerializerSettings.ContractResolver != null)
+            {
+                _jsonSerializerSettings.ContractResolver = CustomPropertyNameContractResolver.Instance;
+            }
         }
 
         public Task<string> Serialize(JsonizeNode jsonizeNode)
