@@ -1,4 +1,3 @@
-using System;
 using JackWFinlay.Jsonize.Abstractions.Exceptions;
 using JackWFinlay.Jsonize.Abstractions.Interfaces;
 
@@ -6,10 +5,10 @@ namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {
     public class JsonizeConfiguration
     {
-        internal const EmptyTextNodeHandling DefaultEmptyTextNodeHandling = EmptyTextNodeHandling.Ignore;
-        internal const NullValueHandling DefaultNullValueHandling = NullValueHandling.Ignore;
-        internal const TextTrimHandling DefaultTextTrimHandling = TextTrimHandling.Trim;
-        internal const ClassAttributeHandling DefaultClassAttributeHandling = ClassAttributeHandling.Array;
+        private const EmptyTextNodeHandling DefaultEmptyTextNodeHandling = EmptyTextNodeHandling.Ignore;
+        private const NullValueHandling DefaultNullValueHandling = NullValueHandling.Ignore;
+        private const TextTrimHandling DefaultTextTrimHandling = TextTrimHandling.Trim;
+        private const ClassAttributeHandling DefaultClassAttributeHandling = ClassAttributeHandling.Array;
 
         private EmptyTextNodeHandling? _emptyTextNodeHandling;
         private NullValueHandling? _nullValueHandling;

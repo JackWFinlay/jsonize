@@ -1,13 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using JackWFinlay.Jsonize.Attributes;
+using JackWFinlay.Jsonize.Abstractions.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace JackWFinlay.Jsonize.Serializer.NewtonsoftJson
 {
+    /// <summary>
+    /// Custom contract resolver to serialize property names as attributed in model.
+    /// </summary>
     public class CustomPropertyNameContractResolver : DefaultContractResolver
     {
         public static readonly CustomPropertyNameContractResolver Instance = new CustomPropertyNameContractResolver();

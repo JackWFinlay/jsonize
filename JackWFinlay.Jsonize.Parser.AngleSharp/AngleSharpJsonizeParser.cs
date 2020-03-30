@@ -13,31 +13,50 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
     public class AngleSharpJsonizeParser : IJsonizeParser
     {
         private readonly IBrowsingContext _browsingContext;
-        private readonly JsonizeConfiguration _jsonizeConfiguration;
+        private readonly JsonizeConfiguration _jsonizeConfiguration = new JsonizeConfiguration();
         
+        /// <summary>
+        /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with default <see cref="BrowsingContext"/>,
+        /// <see cref="Configuration"/>, and <see cref="JsonizeConfiguration"/>.
+        /// </summary>
         public AngleSharpJsonizeParser()
         {
             IConfiguration configuration = new Configuration().WithJs().WithCss();
             _browsingContext = new BrowsingContext(configuration);
-
-            _jsonizeConfiguration = new JsonizeConfiguration();
         }
         
+        /// <summary>
+        /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with the given <see cref="BrowsingContext"/>,
+        /// with the default <see cref="JsonizeConfiguration"/>.
+        /// </summary>
+        /// <param name="browsingContext">The <see cref="BrowsingContext"/> to initialize with.</param>
         public AngleSharpJsonizeParser(IBrowsingContext browsingContext) : this()
         {
             _browsingContext = browsingContext;
         }
 
-        public AngleSharpJsonizeParser(IConfiguration configuration) : this()
-        {
-            _browsingContext = new BrowsingContext(configuration);
-        }
-
+        /// <summary>
+        /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with the given <see cref="JsonizeConfiguration"/>,
+        /// with the default <see cref="Configuration"/> and <see cref="BrowsingContext"/>.
+        /// </summary>
+        /// <param name="jsonizeConfiguration">Tbe <see cref="JsonizeConfiguration"/> to initialize with.</param>
         public AngleSharpJsonizeParser(JsonizeConfiguration jsonizeConfiguration) : this()
         {
             _jsonizeConfiguration = jsonizeConfiguration;
         }
 
+        /// <summary>
+        /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with the given <see cref="JsonizeConfiguration"/>,
+        /// and <see cref="BrowsingContext"/>.
+        /// </summary>
+        /// <param name="browsingContext">The <see cref="BrowsingContext"/> to initialize with.</param>
+        /// <param name="jsonizeConfiguration">Tbe <see cref="JsonizeConfiguration"/> to initialize with.</param>
+        public AngleSharpJsonizeParser(IBrowsingContext browsingContext, JsonizeConfiguration jsonizeConfiguration) : this()
+        {
+            _browsingContext = browsingContext;
+            _jsonizeConfiguration = jsonizeConfiguration;
+        }
+        
         public async Task<JsonizeNode> ParseAsync(string htmlString)
         {
             IDocument document = await _browsingContext.OpenAsync(req => req.Content(htmlString));
@@ -46,7 +65,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
 
             JsonizeNode parentNode = new JsonizeNode()
             {
-                Node = "Document",
+                NodeType = "Document",
                 Attributes = new Dictionary<string, object>()
             };
 
@@ -98,7 +117,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
 
                 JsonizeNode childJsonizeNode = new JsonizeNode
                 {
-                    Node = nodeType.ToString(),
+                    NodeType = nodeType.ToString(),
                     Tag = childNode.NodeName.ToLowerInvariant(),
                     Text = innerText,
                     Attributes = attributes

@@ -1,6 +1,6 @@
 using System;
 
-namespace JackWFinlay.Jsonize.Attributes
+namespace JackWFinlay.Jsonize.Abstractions.Attributes
 {
     /// <summary>
     /// Enables a custom name for serialization.

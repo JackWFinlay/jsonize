@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using JackWFinlay.Jsonize.Abstractions.Configuration;
 using JackWFinlay.Jsonize.Abstractions.Models;
 
 namespace JackWFinlay.Jsonize.Test
@@ -9,7 +8,7 @@ namespace JackWFinlay.Jsonize.Test
     {
         public static readonly JsonizeNode HtmlBodyP = new JsonizeNode()
         {
-            Node = "Document",
+            NodeType = "Document",
             Attributes = new Dictionary<string,object>(),
             Text = null,
             Children = new List<JsonizeNode>()
@@ -17,20 +16,20 @@ namespace JackWFinlay.Jsonize.Test
                 new JsonizeNode()
                 {
                     Attributes = new Dictionary<string, object>(),
-                    Node = "DocumentType",
+                    NodeType = "DocumentType",
                     Tag = "html",
                     Children = Enumerable.Empty<JsonizeNode>()
                 },
                 new JsonizeNode()
                 {
                     Attributes = new Dictionary<string, object>(),
-                    Node = "Element",
+                    NodeType = "Element",
                     Tag = "html",
                     Children = new List<JsonizeNode>()
                     {
                         new JsonizeNode()
                         {
-                            Node = "Element",
+                            NodeType = "Element",
                             Tag = "head",
                             Attributes = new Dictionary<string, object>(),
                             Text = null,
@@ -38,7 +37,7 @@ namespace JackWFinlay.Jsonize.Test
                         },
                         new JsonizeNode()
                         {
-                            Node = "Element",
+                            NodeType = "Element",
                             Tag = "body",
                             Attributes = new Dictionary<string, object>(),
                             Text = null,
@@ -46,7 +45,7 @@ namespace JackWFinlay.Jsonize.Test
                             {
                                 new JsonizeNode()
                                 {
-                                    Node = "Element",
+                                    NodeType = "Element",
                                     Tag = "p",
                                     Attributes = new Dictionary<string, object>()
                                     {
