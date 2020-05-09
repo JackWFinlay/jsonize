@@ -1,6 +1,12 @@
 # Jsonize
 Convert HTML to JSON with this .Net Standard 2.0 package.
 
+## Version 1.0.9
+This version has been archived and is available to download from the release page.
+
+## Version 2.0.0
+This version was abandoned. See branch `jsonize-2.0.0` if you are interested.
+
 ## Version 3.\*.\*
 Version 3.0.0 introduces breaking changes to the Jsonize project. 
 The project has been completely rewritten to decouple, simplify, and keep up with new standards.
