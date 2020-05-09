@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace JackWFinlay.Jsonize
+namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {
     /// <summary>
     /// Specifies handling of keys that have null values.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace JackWFinlay.Jsonize
+namespace JackWFinlay.Jsonize.Abstractions.Configuration
 {
     /// <summary>
     /// Specifies handling of empty Text nodes.
@@ -19,6 +14,5 @@ namespace JackWFinlay.Jsonize
         /// Exclude empty Text nodes from conversion output.
         /// </summary>
         Ignore = 1
-
     }
 }
