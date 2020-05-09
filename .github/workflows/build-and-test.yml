@@ -8,6 +8,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./src
 
     steps:
     - uses: actions/checkout@v2
@@ -18,15 +22,12 @@ jobs:
         
     - name: Build
       run: dotnet build --configuration Release
-      working-directory: ./src
 
     - name: Run unit tests
       run: dotnet test --configuration Release
-      working-directory: ./src
 
     - name: Generate nuget package
       run: dotnet pack --configuration Release -o nupkg
-      working-directory: ./src
 
     - name: Publish nuget package
       run: find . -name *.nupkg -type f -print0 | xargs -0 -I pkg dotnet nuget push pkg -k $nuget_api_key -s "https://api.nuget.org/v3/index.json" --skip-duplicate
