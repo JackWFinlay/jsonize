@@ -28,7 +28,9 @@ you must supply the HTML as a `string` to `Jsonizer` class methods.
 
 ## Try it
 
-Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/
+Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/.
+Currently versions in the 1.0.* series are available.
+I am currently investigating options for CI/CD.
 
 ## Usage
 
