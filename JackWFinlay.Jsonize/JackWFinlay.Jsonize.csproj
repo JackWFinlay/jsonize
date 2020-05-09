@@ -2,14 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>3.0.0-alpha.1</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
+        <Authors>Jack Witbrock Finlay</Authors>
+        <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
+        <AssemblyVersion>3.0.0</AssemblyVersion>
+        <FileVersion>3.0.0</FileVersion>
+        <PackageTags>JSON,HTML,Convert</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AngleSharp" Version="0.14.0-alpha-811" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\JackWFinlay.Jsonize.Abstractions\JackWFinlay.Jsonize.Abstractions.csproj" />
+        <ProjectReference Include="..\JackWFinlay.Jsonize.Abstractions\JackWFinlay.Jsonize.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

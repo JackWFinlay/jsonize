@@ -13,11 +13,11 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
     public class AngleSharpJsonizeParser : IJsonizeParser
     {
         private readonly IBrowsingContext _browsingContext;
-        private readonly JsonizeConfiguration _jsonizeConfiguration = new JsonizeConfiguration();
+        private readonly JsonizeParserConfiguration _jsonizeParserConfiguration = new JsonizeParserConfiguration();
         
         /// <summary>
         /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with default <see cref="BrowsingContext"/>,
-        /// <see cref="Configuration"/>, and <see cref="JsonizeConfiguration"/>.
+        /// <see cref="Configuration"/>, and <see cref="JsonizeParserConfiguration"/>.
         /// </summary>
         public AngleSharpJsonizeParser()
         {
@@ -27,7 +27,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         
         /// <summary>
         /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with the given <see cref="BrowsingContext"/>,
-        /// with the default <see cref="JsonizeConfiguration"/>.
+        /// with the default <see cref="JsonizeParserConfiguration"/>.
         /// </summary>
         /// <param name="browsingContext">The <see cref="BrowsingContext"/> to initialize with.</param>
         public AngleSharpJsonizeParser(IBrowsingContext browsingContext) : this()
@@ -39,10 +39,10 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         /// Creates an <see cref="AngleSharpJsonizeParser"/> instance with the given <see cref="JsonizeConfiguration"/>,
         /// with the default <see cref="Configuration"/> and <see cref="BrowsingContext"/>.
         /// </summary>
-        /// <param name="jsonizeConfiguration">Tbe <see cref="JsonizeConfiguration"/> to initialize with.</param>
-        public AngleSharpJsonizeParser(JsonizeConfiguration jsonizeConfiguration) : this()
+        /// <param name="jsonizeParserConfiguration">Tbe <see cref="JsonizeParserConfiguration"/> to initialize with.</param>
+        public AngleSharpJsonizeParser(JsonizeParserConfiguration jsonizeParserConfiguration) : this()
         {
-            _jsonizeConfiguration = jsonizeConfiguration;
+            _jsonizeParserConfiguration = jsonizeParserConfiguration;
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         /// and <see cref="BrowsingContext"/>.
         /// </summary>
         /// <param name="browsingContext">The <see cref="BrowsingContext"/> to initialize with.</param>
-        /// <param name="jsonizeConfiguration">Tbe <see cref="JsonizeConfiguration"/> to initialize with.</param>
-        public AngleSharpJsonizeParser(IBrowsingContext browsingContext, JsonizeConfiguration jsonizeConfiguration) : this()
+        /// <param name="jsonizeParserConfiguration">Tbe <see cref="JsonizeParserConfiguration"/> to initialize with.</param>
+        public AngleSharpJsonizeParser(IBrowsingContext browsingContext, JsonizeParserConfiguration jsonizeParserConfiguration) : this()
         {
             _browsingContext = browsingContext;
-            _jsonizeConfiguration = jsonizeConfiguration;
+            _jsonizeParserConfiguration = jsonizeParserConfiguration;
         }
         
         public async Task<JsonizeNode> ParseAsync(string htmlString)
@@ -99,7 +99,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
                 NodeType nodeType = childNode.NodeType;
                 string innerText = GetInnerText(childNode);
 
-                if (_jsonizeConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Ignore
+                if (_jsonizeParserConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Ignore
                     && nodeType == NodeType.Text
                     && string.IsNullOrWhiteSpace(innerText)
                 )
@@ -138,7 +138,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
         {
             string innerText = element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault();
             
-            innerText = _jsonizeConfiguration.TextTrimHandling == TextTrimHandling.Trim
+            innerText = _jsonizeParserConfiguration.TextTrimHandling == TextTrimHandling.Trim
                 ? innerText?.Trim()
                 : innerText;
             
@@ -149,7 +149,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             }
 
             // innerText is null here, if we still want to include the text node, we return one with an empty string in it.
-            innerText = _jsonizeConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Include 
+            innerText = _jsonizeParserConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Include 
                 ? string.Empty 
                 : null;
 
@@ -163,7 +163,7 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
             foreach (IAttr attribute in attributesList)
             {
                 if (attribute.Name.Equals("class", StringComparison.InvariantCultureIgnoreCase)
-                    && _jsonizeConfiguration.ClassAttributeHandling == ClassAttributeHandling.Array)
+                    && _jsonizeParserConfiguration.ClassAttributeHandling == ClassAttributeHandling.Array)
                 {
                     IEnumerable<string> classList = ParseClassList(attribute);
                     attributes.Add(attribute.Name, classList);
