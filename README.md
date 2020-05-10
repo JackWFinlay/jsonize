@@ -28,9 +28,15 @@ you must supply the HTML as a `string` to `Jsonizer` class methods.
 
 ## Try it
 
-Get the NuGet package: https://www.nuget.org/packages/JackWFinlay.Jsonize/.
-Currently versions in the 1.0.* series are available.
-I am currently investigating options for CI/CD.
+Get the NuGet packages: 
+
+**Package**|**Build Status**|**NuGet Version**
+:-----|:-----:|:-----:
+[JackWFinlay.Jsonize](https://www.nuget.org/packages/JackWFinlay.Jsonize/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/JackWFinlay.Jsonize)
+[JackWFinlay.Jsonize.Abstractions](https://www.nuget.org/packages/JackWFinlay.Jsonize.Abstractions/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/JackWFinlay.Jsonize.Abstractions)
+[JackWFinlay.Jsonize.Parser.AngleSharp](https://www.nuget.org/packages/JackWFinlay.Jsonize.Parser.AngleSharp/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/JackWFinlay.Jsonize.Parser.AngleSharp)
+[JackWFinlay.Jsonize.Serializer.NewtonSoftJson](https://www.nuget.org/packages/JackWFinlay.Jsonize.Serializer.NewtonsoftJson/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/JackWFinlay.Jsonize.Serializer.NewtonSoftJson)
+
 
 ## Usage
 
