@@ -136,12 +136,22 @@ namespace JackWFinlay.Jsonize.Parser.AngleSharp
 
         private string GetInnerText(INode element)
         {
-            string innerText = element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault();
-            
+            string innerText = null;
+
+            switch (element.NodeType)
+            {
+                case NodeType.Comment:
+                    innerText = element.TextContent;
+                    break;
+                default:
+                    innerText = element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault();
+                    break;
+            }
+
             innerText = _jsonizeParserConfiguration.TextTrimHandling == TextTrimHandling.Trim
                 ? innerText?.Trim()
                 : innerText;
-            
+
             // Return innerText if it has a value, else we have to check the EmptyTextNodeHandling setting.
             if (!string.IsNullOrWhiteSpace(innerText))
             {
