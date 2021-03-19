@@ -1,19 +1,18 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using JackWFinlay.Jsonize.Abstractions.Models;
 using JackWFinlay.Jsonize.Test.Fixtures;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace JackWFinlay.Jsonize.Test
 {
-    public class EndToEndAngleSharpNewtonsoftTests : IClassFixture<EndToEndAngleSharpNewtonsoftTestFixture>
+    public class EndToEndAngleSharpJsonizeTests : IClassFixture<EndToEndAngleSharpJsonizeTestFixture>
     {
-        private readonly EndToEndAngleSharpNewtonsoftTestFixture _fixture;
+        private readonly EndToEndAngleSharpJsonizeTestFixture _fixture;
         private readonly ITestOutputHelper _testOutputHelper;
 
-        public EndToEndAngleSharpNewtonsoftTests(EndToEndAngleSharpNewtonsoftTestFixture fixture, ITestOutputHelper testOutputHelper)
+        public EndToEndAngleSharpJsonizeTests(EndToEndAngleSharpJsonizeTestFixture fixture,
+            ITestOutputHelper testOutputHelper)
         {
             _fixture = fixture;
             _testOutputHelper = testOutputHelper;

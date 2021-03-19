@@ -18,15 +18,15 @@ namespace JackWFinlay.Jsonize.Serializer.NewtonsoftJson
             {
                 ContractResolver = CustomPropertyNameContractResolver.Instance
             };
-
         }
 
         /// <summary>
         /// Initialize serializer with given <see cref="JsonSerializerSettings"/>.
         /// </summary>
         /// <param name="jsonSerializerSettings"><see cref="JsonSerializerSettings"/> to use for serialization.</param>
-        public NewtonsoftJsonJsonizeSerializer(JsonSerializerSettings jsonSerializerSettings) : this()
+        public NewtonsoftJsonJsonizeSerializer(JsonSerializerSettings jsonSerializerSettings)
         {
+            jsonSerializerSettings.ContractResolver = CustomPropertyNameContractResolver.Instance;
             _jsonSerializerSettings = jsonSerializerSettings;
         }
         

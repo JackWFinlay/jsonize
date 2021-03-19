@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize.Test", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize.Serializer.NewtonsoftJson", "JackWFinlay.Jsonize.Serializer.NewtonsoftJson\JackWFinlay.Jsonize.Serializer.NewtonsoftJson.csproj", "{1ED8DCB2-3CEA-4233-83A0-2BD4F583270A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackWFinlay.Jsonize.Serializer", "JackWFinlay.Jsonize.Serializer\JackWFinlay.Jsonize.Serializer.csproj", "{AD3972C3-95F1-4906-BE0F-9A9A2B90CF9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{1ED8DCB2-3CEA-4233-83A0-2BD4F583270A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ED8DCB2-3CEA-4233-83A0-2BD4F583270A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED8DCB2-3CEA-4233-83A0-2BD4F583270A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3972C3-95F1-4906-BE0F-9A9A2B90CF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3972C3-95F1-4906-BE0F-9A9A2B90CF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3972C3-95F1-4906-BE0F-9A9A2B90CF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3972C3-95F1-4906-BE0F-9A9A2B90CF9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
