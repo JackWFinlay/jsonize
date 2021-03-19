@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
         <Version>3.0.0-alpha.1</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Description>Abstractions package for JackWFinlay.Jsonize</Description>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>

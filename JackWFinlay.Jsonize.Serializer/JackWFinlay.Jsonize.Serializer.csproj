@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
+        <TargetFramework>net5.0</TargetFramework>
         <Version>3.0.0-alpha.2</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Description>A serializer package for JackWFinlay.Jsonize using Newtonsoft.Json</Description>
+        <Description>A serializer package for JackWFinlay.Jsonize using System.Text.Json</Description>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
@@ -15,10 +15,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\JackWFinlay.Jsonize.Abstractions\JackWFinlay.Jsonize.Abstractions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
 </Project>

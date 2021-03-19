@@ -57,7 +57,7 @@ private static async Task<string> Testy(string q = "")
         AngleSharpJsonizeParser parser = new AngleSharpJsonizeParser();
         NewtonsoftJsonJsonizeSerializer serializer = new NewtonsoftJsonJsonizeSerializer();        
 
-        Jsonizer jsonizer = new Jsonize(parser, serializer);
+        Jsonizer jsonizer = new Jsonizer(parser, serializer);
 
         return jsonizer.ParseToStringAsync();
     }
