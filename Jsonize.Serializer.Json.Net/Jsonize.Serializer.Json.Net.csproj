@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>Jsonize.Serializer.Json.Net</PackageId>
+        <AssemblyName>Jsonize.Serializer.Json.Net</AssemblyName>
+        <IsPackable>True</IsPackable>
+        <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
+        <Version>3.0.0-alpha.1</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Description>A serializer package for the package Jsonize using Newtonsoft.Json</Description>
+        <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Serializer.NewtonsoftJson</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
+        <Authors>Jack Witbrock Finlay</Authors>
+        <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
+        <AssemblyVersion>3.0.0</AssemblyVersion>
+        <FileVersion>3.0.0</FileVersion>
+        <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Jsonize.Abstractions\Jsonize.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+</Project>
