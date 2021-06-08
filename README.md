@@ -36,7 +36,7 @@ Get the NuGet packages:
 :-----|:-----:|:-----:
 [Jsonize](https://www.nuget.org/packages/Jsonize/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize)
 [Jsonize.Abstractions](https://www.nuget.org/packages/Jsonize.Abstractions/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Abstractions)
-[Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Parser.AngleSharp)
+[Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Parser)
 [Jsonize.Serializer](https://www.nuget.org/packages/Jsonize.Serializer/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer)
 [Jsonize.Serializer.Json.Net](https://www.nuget.org/packages/Jsonize.Serializer.Json.Net/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer.Json.Net)
 
