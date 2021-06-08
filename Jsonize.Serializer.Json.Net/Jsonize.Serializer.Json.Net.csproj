@@ -15,7 +15,11 @@
         <AssemblyVersion>3.0.0</AssemblyVersion>
         <FileVersion>3.0.0</FileVersion>
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
+        <Copyright>2016-2021 Jack Witbrock Finlay</Copyright>
+        <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
+        <RepositoryType>git</RepositoryType>
         <LangVersion>8</LangVersion>
+        <Title>Jsonize.Serializer.Json.Net</Title>
     </PropertyGroup>
 
     <ItemGroup>
