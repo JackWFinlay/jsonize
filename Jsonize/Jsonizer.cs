@@ -27,7 +27,7 @@ namespace Jsonize
         {
             JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration()
             {
-                Serialize = serializer
+                Serializer = serializer
             };
 
             _jsonizeConfiguration = jsonizeConfiguration;
@@ -59,7 +59,7 @@ namespace Jsonize
             JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration()
             {
                 Parser = jsonizeParser,
-                Serialize = jsonizeSerializer
+                Serializer = jsonizeSerializer
             };
 
             _jsonizeConfiguration = jsonizeConfiguration;
@@ -85,7 +85,7 @@ namespace Jsonize
         public async Task<string> ParseToStringAsync(string htmlString)
         {
             JsonizeNode jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString);
-            string jsonString = await _jsonizeConfiguration.Serialize.Serialize(jsonizeNode);
+            string jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
             
             return jsonString;
         }

@@ -11,7 +11,7 @@ namespace Jsonize.Abstractions.Configuration
         /// <summary>
         /// Gets or sets the serializer for serializing the result to JSON.
         /// </summary>
-        public IJsonizeSerializer Serialize
+        public IJsonizeSerializer Serializer
         {
             get => _jsonizeSerializer ?? throw new JsonizeNullSerializerException();
             set => _jsonizeSerializer = value;
