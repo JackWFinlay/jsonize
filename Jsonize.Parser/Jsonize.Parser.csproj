@@ -7,7 +7,7 @@
         <Description>Parser engine for the package Jsonize</Description>
         <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Parser.AngleSharp</PackageReleaseNotes>
         <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
-        <Version>3.0.0-alpha.1</Version>
+        <Version>3.0.0</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
