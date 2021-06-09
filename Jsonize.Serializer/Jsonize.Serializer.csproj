@@ -4,7 +4,7 @@
         <PackageId>Jsonize.Serializer</PackageId>
         <AssemblyName>Jsonize.Serializer</AssemblyName>
         <IsPackable>True</IsPackable>
-        <Version>3.0.0-alpha.1</Version>
+        <Version>3.0.0</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>A serializer package for the package Jsonize using System.Text.Json</Description>
         <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Serializer</PackageReleaseNotes>
