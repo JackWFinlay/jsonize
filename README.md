@@ -26,7 +26,12 @@ Feel free to implement your own serializer.
 
 The `Jsonize` package simply wraps the parser and serializer functions into one.
 Jsonize no longer will grab any content from the internet for you;
-you must supply the HTML as a `string` to `Jsonizer` class methods.
+you must supply the HTML as a `string` (or alternatively a `Stream` from 3.1.0) to `Jsonizer` class methods.
+
+### Deprecation Note:
+Version `3.0.0` introduced a major performance regression. 
+Please upgrade to version `3.1.0` as `3.0.0` will be deprecated once the new package is pushed to NuGet.
+You will also get some nice extra methods for working with `Stream` objects.
 
 ## Try it
 

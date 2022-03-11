@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Jsonize.Abstractions.Configuration;
 using Jsonize.Abstractions.Interfaces;
 using Jsonize.Abstractions.Models;
@@ -25,7 +26,7 @@ namespace Jsonize
         /// <param name="serializer">The <see cref="IJsonizeSerializer"/> to use for serialization of results.</param>
         public Jsonizer(IJsonizeSerializer serializer)
         {
-            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration()
+            var jsonizeConfiguration = new JsonizeConfiguration()
             {
                 Serializer = serializer
             };
@@ -40,7 +41,7 @@ namespace Jsonize
         /// <param name="jsonizeParser">The <see cref="IJsonizeParser"/> to use for parsing.</param>
         public Jsonizer(IJsonizeParser jsonizeParser)
         {
-            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration()
+            var jsonizeConfiguration = new JsonizeConfiguration()
             {
                 Parser = jsonizeParser
             };
@@ -56,7 +57,7 @@ namespace Jsonize
         /// <param name="jsonizeSerializer">The <see cref="IJsonizeSerializer"/> to use for serialization of results.</param>
         public Jsonizer(IJsonizeParser jsonizeParser, IJsonizeSerializer jsonizeSerializer)
         {
-            JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration()
+            var jsonizeConfiguration = new JsonizeConfiguration()
             {
                 Parser = jsonizeParser,
                 Serializer = jsonizeSerializer
@@ -72,7 +73,19 @@ namespace Jsonize
         /// <returns>The parent <see cref="JsonizeNode"/> representing the HTML.</returns>
         public async Task<JsonizeNode> ParseToJsonizeNodeAsync(string htmlString)
         {
-            JsonizeNode jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString);
+            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString);
+
+            return jsonizeNode;
+        }
+
+        /// <summary>
+        /// Parse the given HTML <see cref="string"/> into Jsonize's <see cref="JsonizeNode"/> format.
+        /// </summary>
+        /// <param name="htmlStream">The HTML to parse.</param>
+        /// <returns>The parent <see cref="JsonizeNode"/> representing the HTML.</returns>
+        public async Task<JsonizeNode> ParseToJsonizeNodeAsync(Stream htmlStream)
+        {
+            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlStream);
 
             return jsonizeNode;
         }
@@ -84,8 +97,21 @@ namespace Jsonize
         /// <returns>The JSON <see cref="string"/> representation of the HTML.</returns>
         public async Task<string> ParseToStringAsync(string htmlString)
         {
-            JsonizeNode jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString);
-            string jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
+            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlString);
+            var jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
+            
+            return jsonString;
+        }
+        
+        /// <summary>
+        /// Parse the given HTML <see cref="string"/> into a JSON <see cref="string"/>.
+        /// </summary>
+        /// <param name="htmlStream">The HTML to parse.</param>
+        /// <returns>The JSON <see cref="string"/> representation of the HTML.</returns>
+        public async Task<string> ParseToStringAsync(Stream htmlStream)
+        {
+            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlStream);
+            var jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
             
             return jsonString;
         }

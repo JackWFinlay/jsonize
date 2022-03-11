@@ -6,7 +6,7 @@ namespace Jsonize.Test
 {
     public static class JsonizeNodeTestResources
     {
-        public static readonly JsonizeNode HtmlBodyP = new JsonizeNode()
+        public static readonly JsonizeNode HtmlBodyP = new ()
         {
             NodeType = "Document",
             Attr = new Dictionary<string,object>(),

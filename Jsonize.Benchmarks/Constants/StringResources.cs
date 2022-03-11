@@ -1,15 +1,18 @@
-namespace Jsonize.Test
-{
-    public static class StringResources
-    {
-        public const string HtmlBodyP = @"<!DOCTYPE html><html><head></head><body><p class=""test-class"">test</p></body></html>";
-        public const string HtmlBodyPResult = "{\"nodeType\":\"Document\",\"tag\":null,\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"DocumentType\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"head\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"body\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"p\",\"text\":\"test\",\"attr\":{\"class\":[\"test-class\"]},\"children\":[]}]}]}]}";
-        public const string DocoHtmlExample = "<!DOCTYPE html><html><head><title>Jsonize</title></head><body><div id=\"parent\" class=\"parent-div\"><div id=\"child1\" class=\"child-div child1\">Some Text</div><div id=\"child2\" class=\"child-div child2\">Some Text</div><div id=\"child3\" class=\"child-div child3\">Some Text</div></div></body></html>";
+namespace Jsonize.Benchmarks.Constants;
 
-        public const string DocoHtmlExampleResult =
-            "{\"nodeType\":\"Document\",\"tag\":null,\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"DocumentType\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"head\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"title\",\"text\":\"Jsonize\",\"attr\":{},\"children\":[]}]},{\"nodeType\":\"Element\",\"tag\":\"body\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":null,\"attr\":{\"id\":\"parent\",\"class\":[\"parent-div\"]},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child1\",\"class\":[\"child-div\",\"child1\"]},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child2\",\"class\":[\"child-div\",\"child2\"]},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child3\",\"class\":[\"child-div\",\"child3\"]},\"children\":[]}]}]}]}]}";
-        
-        public const string LargeExample = @"
+public static class StringResources
+{
+    public const string HtmlBodyP = 
+        @"<!DOCTYPE html><html><head></head><body><p class=""test-class"">test</p></body></html>";
+    public const string HtmlBodyPResult = 
+        "{\"nodeType\":\"Document\",\"tag\":null,\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"DocumentType\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"head\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"body\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"p\",\"text\":\"test\",\"attr\":{\"class\":[\"test-class\"]},\"children\":[]}]}]}]}";
+    
+    public const string DocoHtmlExample = 
+        "<!DOCTYPE html><html><head><title>Jsonize</title></head><body><div id=\"parent\" class=\"parent-div\"><div id=\"child1\" class=\"child-div child1\">Some Text</div><div id=\"child2\" class=\"child-div child2\">Some Text</div><div id=\"child3\" class=\"child-div child3\">Some Text</div></div></body></html>";
+    public const string DocoHtmlExampleResult =
+        "{\"nodeType\":\"Document\",\"tag\":null,\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"DocumentType\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"html\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"head\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"title\",\"text\":\"Jsonize\",\"attr\":{},\"children\":[]}]},{\"nodeType\":\"Element\",\"tag\":\"body\",\"text\":null,\"attr\":{},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":null,\"attr\":{\"id\":\"parent\",\"class\":[\"parent-div\"]},\"children\":[{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child1\",\"class\":[\"child-div\",\"child1\"]},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child2\",\"class\":[\"child-div\",\"child2\"]},\"children\":[]},{\"nodeType\":\"Element\",\"tag\":\"div\",\"text\":\"Some Text\",\"attr\":{\"id\":\"child3\",\"class\":[\"child-div\",\"child3\"]},\"children\":[]}]}]}]}]}";
+
+    public const string LargeExample = @"
 <html><head><!--<meta HTTP-EQUIV=""Content-Type"" CONTENT=""text/html; charset=ISO-8859-1"">  --><title>Large HTML page with images</title><!-- The following link block and style block present methods how to load external CSS documents.
      The link tag forces an immediate download of the CSS document whereas the import clause in
      the style block has the document downloaded some random time later.  --><link href=""htmlparser/sections.css"" rel=""stylesheet"" type=""text/css""><!--
@@ -521,5 +524,4 @@ one for the canceled model and one for the canceled payment.
 </font>
 </pre><p><img src=""stadyn_image10.gif"" width=""174"" height=""310"" alt=""stadyn_image10.gif (4217 bytes)""><br>stadyn_image10</p></body></html>
 ";
-    }
 }

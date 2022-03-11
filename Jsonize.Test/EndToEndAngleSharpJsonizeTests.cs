@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Jsonize.Test.Fixtures;
 using Xunit;
@@ -23,6 +25,38 @@ namespace Jsonize.Test
             var jsonize = await _fixture.Jsonizer.ParseToStringAsync(StringResources.DocoHtmlExample);
 
             Assert.Equal(StringResources.DocoHtmlExampleResult, jsonize);
+            
+            _testOutputHelper.WriteLine(jsonize);
+        }
+        
+        [Fact]
+        public async Task LargeExampleString_DefaultConfiguration_ProducesValidOutput()
+        {
+            var jsonize = await _fixture.Jsonizer.ParseToStringAsync(StringResources.LargeExample);
+
+            //Assert.Equal(StringResources.DocoHtmlExampleResult, jsonize);
+            
+            _testOutputHelper.WriteLine(jsonize);
+        }
+
+        [Fact]
+        public async Task DocoHtmlStream_DefaultConfiguration_ProducesValidOutput()
+        {
+            await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(StringResources.DocoHtmlExample));
+            var jsonize = await _fixture.Jsonizer.ParseToStringAsync(stream);
+
+            Assert.Equal(StringResources.DocoHtmlExampleResult, jsonize);
+            
+            _testOutputHelper.WriteLine(jsonize);
+        }
+        
+        [Fact]
+        public async Task LargeExampleStream_DefaultConfiguration_ProducesValidOutput()
+        {
+            await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(StringResources.LargeExample));
+            var jsonize = await _fixture.Jsonizer.ParseToStringAsync(stream);
+
+            //Assert.Equal(StringResources.DocoHtmlExampleResult, jsonize);
             
             _testOutputHelper.WriteLine(jsonize);
         }

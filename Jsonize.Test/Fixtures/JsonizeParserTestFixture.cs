@@ -3,11 +3,11 @@ using Jsonize.Parser;
 
 namespace Jsonize.Test.Fixtures
 {
-    public class AngleSharpJsonizeParserTestFixture
+    public class JsonizeParserTestFixture
     {
         public IJsonizeParser JsonizeParser { get; }
 
-        public AngleSharpJsonizeParserTestFixture()
+        public JsonizeParserTestFixture()
         {
             JsonizeParser = new JsonizeParser();
         }
