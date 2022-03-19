@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
@@ -91,18 +92,18 @@ namespace Jsonize.Parser
             _jsonizeParserConfiguration = jsonizeParserConfiguration;
         }
         
-        public async Task<JsonizeNode> ParseAsync(string htmlString)
+        public async Task<JsonizeNode> ParseAsync(string htmlString, CancellationToken cancellationToken = default)
         {
             var htmlParser = new HtmlParser(_htmlParserOptions, _browsingContext);
-            var document = await htmlParser.ParseDocumentAsync(htmlString, default);
+            var document = await htmlParser.ParseDocumentAsync(htmlString, cancellationToken);
 
             return await ParseDocument(document);
         }
 
-        public async Task<JsonizeNode> ParseAsync(Stream htmlStream)
+        public async Task<JsonizeNode> ParseAsync(Stream htmlStream, CancellationToken cancellationToken = default)
         {
             var htmlParser = new HtmlParser(_htmlParserOptions, _browsingContext);
-            var document = await htmlParser.ParseDocumentAsync(htmlStream, default);
+            var document = await htmlParser.ParseDocumentAsync(htmlStream, cancellationToken);
 
             return await ParseDocument(document);
         }
@@ -134,31 +135,12 @@ namespace Jsonize.Parser
             
             foreach (var childNode in element.ChildNodes)
             {
-                var nodeType = childNode.NodeType;
-                var innerText = GetInnerText(childNode);
+                var childJsonizeNode = GetNodeValues(childNode);
 
-                if (_jsonizeParserConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Ignore
-                    && nodeType == NodeType.Text
-                    && string.IsNullOrWhiteSpace(innerText)
-                )
+                if (childJsonizeNode is null)
                 {
                     continue;
                 }
-
-                IDictionary<string, object> attributes = new Dictionary<string, object>();
-
-                if (childNode is IElement childElement)
-                {
-                    attributes = GetAttributes(childElement.Attributes?.ToList());
-                }
-
-                var childJsonizeNode = new JsonizeNode
-                {
-                    NodeType = nodeType.ToString(),
-                    Tag = childNode.NodeName.ToLowerInvariant(),
-                    Text = innerText,
-                    Attr = attributes
-                };
 
                 if (childNode.HasChildNodes)
                 {
@@ -169,6 +151,37 @@ namespace Jsonize.Parser
             }
 
             parentNode.Children = childNodes;
+        }
+
+        private JsonizeNode GetNodeValues(INode childNode)
+        {
+            var nodeType = childNode.NodeType;
+            var innerText = GetInnerText(childNode);
+
+            if (_jsonizeParserConfiguration.EmptyTextNodeHandling == EmptyTextNodeHandling.Ignore
+                && nodeType == NodeType.Text
+                && string.IsNullOrWhiteSpace(innerText)
+               )
+            {
+                return null;
+            }
+
+            IDictionary<string, object> attributes = new Dictionary<string, object>();
+
+            if (childNode is IElement childElement)
+            {
+                attributes = GetAttributes(childElement.Attributes?.ToList());
+            }
+
+            var childJsonizeNode = new JsonizeNode
+            {
+                NodeType = nodeType.ToString(),
+                Tag = childNode.NodeName.ToLowerInvariant(),
+                Text = innerText,
+                Attr = attributes
+            };
+            
+            return childJsonizeNode;
         }
 
         private string GetInnerText(INode element)

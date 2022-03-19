@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Jsonize.Abstractions.Configuration;
 using Jsonize.Abstractions.Interfaces;
@@ -6,7 +7,7 @@ using Jsonize.Abstractions.Models;
 
 namespace Jsonize
 {
-    public class Jsonizer
+    public class Jsonizer : IJsonizer
     {
         private readonly JsonizeConfiguration _jsonizeConfiguration;
 
@@ -70,10 +71,11 @@ namespace Jsonize
         /// Parse the given HTML <see cref="string"/> into Jsonize's <see cref="JsonizeNode"/> format.
         /// </summary>
         /// <param name="htmlString">The HTML to parse.</param>
+        /// <param name="cancellationToken">Cancellation token to request cancellation.</param>
         /// <returns>The parent <see cref="JsonizeNode"/> representing the HTML.</returns>
-        public async Task<JsonizeNode> ParseToJsonizeNodeAsync(string htmlString)
+        public async Task<JsonizeNode> ParseToJsonizeNodeAsync(string htmlString, CancellationToken cancellationToken = default)
         {
-            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString);
+            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlString, cancellationToken);
 
             return jsonizeNode;
         }
@@ -82,35 +84,38 @@ namespace Jsonize
         /// Parse the given HTML <see cref="string"/> into Jsonize's <see cref="JsonizeNode"/> format.
         /// </summary>
         /// <param name="htmlStream">The HTML to parse.</param>
+        /// <param name="cancellationToken">Cancellation token to request cancellation.</param>
         /// <returns>The parent <see cref="JsonizeNode"/> representing the HTML.</returns>
-        public async Task<JsonizeNode> ParseToJsonizeNodeAsync(Stream htmlStream)
+        public async Task<JsonizeNode> ParseToJsonizeNodeAsync(Stream htmlStream, CancellationToken cancellationToken = default)
         {
-            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlStream);
+            var jsonizeNode = await _jsonizeConfiguration.Parser.ParseAsync(htmlStream, cancellationToken);
 
             return jsonizeNode;
         }
-        
+
         /// <summary>
         /// Parse the given HTML <see cref="string"/> into a JSON <see cref="string"/>.
         /// </summary>
         /// <param name="htmlString">The HTML to parse.</param>
+        /// <param name="cancellationToken">Cancellation token to request cancellation.</param>
         /// <returns>The JSON <see cref="string"/> representation of the HTML.</returns>
-        public async Task<string> ParseToStringAsync(string htmlString)
+        public async Task<string> ParseToStringAsync(string htmlString, CancellationToken cancellationToken = default)
         {
-            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlString);
+            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlString, cancellationToken);
             var jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
             
             return jsonString;
         }
-        
+
         /// <summary>
         /// Parse the given HTML <see cref="string"/> into a JSON <see cref="string"/>.
         /// </summary>
         /// <param name="htmlStream">The HTML to parse.</param>
+        /// <param name="cancellationToken">Cancellation token to request cancellation.</param>
         /// <returns>The JSON <see cref="string"/> representation of the HTML.</returns>
-        public async Task<string> ParseToStringAsync(Stream htmlStream)
+        public async Task<string> ParseToStringAsync(Stream htmlStream, CancellationToken cancellationToken = default)
         {
-            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlStream);
+            var jsonizeNode = await ParseToJsonizeNodeAsync(htmlStream, cancellationToken);
             var jsonString = await _jsonizeConfiguration.Serializer.Serialize(jsonizeNode);
             
             return jsonString;

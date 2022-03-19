@@ -28,8 +28,20 @@ The `Jsonize` package simply wraps the parser and serializer functions into one.
 Jsonize no longer will grab any content from the internet for you;
 you must supply the HTML as a `string` (or alternatively a `Stream` from 3.1.0) to `Jsonizer` class methods.
 
+### Version 3.1.0
+#### CancellationTokens
+From version 3.1.0, you can now pass a `CancellationToken`
+to allow cancellation of the parsing methods.
+This is an optional parameter, so will not break any existing code.
+
+#### Streams
+From version 3.1.0 you can now directly pass in a `Stream` object for your HTML to be parsed.
+The methods accepting a `Stream` are overloads on the same method names as before.
+There's no real performance increase, but you'll no longer have to process the `Stream` to a `string` yourself first!
+
 ### Deprecation Note:
-Version `3.0.0` introduced a major performance regression. 
+Version `3.0.0` introduced a major performance regression that could make the run time many hundred times worse
+(compared to version 1.0.9)!. 
 Please upgrade to version `3.1.0` as `3.0.0` will be deprecated once the new package is pushed to NuGet.
 You will also get some nice extra methods for working with `Stream` objects.
 
@@ -37,13 +49,13 @@ You will also get some nice extra methods for working with `Stream` objects.
 
 Get the NuGet packages: 
 
-**Package**|**Build Status**|**NuGet Version**
-:-----|:-----:|:-----:
-[Jsonize](https://www.nuget.org/packages/Jsonize/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize)
-[Jsonize.Abstractions](https://www.nuget.org/packages/Jsonize.Abstractions/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Abstractions)
-[Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Parser)
-[Jsonize.Serializer](https://www.nuget.org/packages/Jsonize.Serializer/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer)
-[Jsonize.Serializer.Json.Net](https://www.nuget.org/packages/Jsonize.Serializer.Json.Net/)|![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer.Json.Net)
+| **Package**                                                                                | **Build Status**                                                                     | **NuGet Version**                                                                           |
+|:-------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------|
+| [Jsonize](https://www.nuget.org/packages/Jsonize/)                                         | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize)                      |
+| [Jsonize.Abstractions](https://www.nuget.org/packages/Jsonize.Abstractions/)               | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Abstractions)         |
+| [Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)                           | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Parser)               |
+| [Jsonize.Serializer](https://www.nuget.org/packages/Jsonize.Serializer/)                   | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer)           |
+| [Jsonize.Serializer.Json.Net](https://www.nuget.org/packages/Jsonize.Serializer.Json.Net/) | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer.Json.Net)  |
 
 
 ## Usage
@@ -122,7 +134,7 @@ Results are in the form:
 ## Example:
 
 The following HTML:
-```HTML
+``` HTML
 <!DOCTYPE html>
 <html>
     <head>
@@ -139,7 +151,7 @@ The following HTML:
 ```
 
 Becomes:
-```JSON
+``` JSON
 {
     "nodeType": "Document",
     "tag": null,

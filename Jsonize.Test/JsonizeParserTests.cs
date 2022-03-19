@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Jsonize.Abstractions.Models;
@@ -36,6 +37,45 @@ namespace Jsonize.Test
             actual
                 .Should()
                 .BeEquivalentTo(JsonizeNodeTestResources.HtmlBodyP);
+        }
+        
+        [Fact]
+        public async Task HtmlBodyPStream_ForceCancellation_ReturnsCancelledTask()
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+            cancellationTokenSource.Cancel();
+            
+            await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(StringResources.HtmlBodyP));
+            
+            var task = _testFixture.JsonizeParser.ParseAsync(stream, cancellationToken);
+
+            task.IsCanceled
+                .Should()
+                .Be(true);
+
+            task.IsFaulted
+                .Should()
+                .Be(false);
+        }
+        
+        [Fact]
+        public async Task HtmlBodyPStream_PassCancellationToken_ReturnsCompletedTask()
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+            
+            await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(StringResources.HtmlBodyP));
+
+            var task = _testFixture.JsonizeParser.ParseAsync(stream, cancellationToken);
+
+            task.IsCanceled
+                .Should()
+                .Be(false);
+
+            task.IsCompleted
+                .Should()
+                .Be(true);
         }
     }
 }
