@@ -4,21 +4,23 @@
         <PackageId>Jsonize.Abstractions</PackageId>
         <AssemblyName>Jsonize.Abstractions</AssemblyName>
         <IsPackable>True</IsPackable>
-        <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
-        <Version>3.0.0</Version>
+        <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
+        <Version>3.1.0</Version>
+        <AssemblyVersion>3.1.0</AssemblyVersion>
+        <FileVersion>3.1.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>Abstractions package for Jsonize</Description>
-        <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Abstractions</PackageReleaseNotes>
+        <PackageReleaseNotes>Add methods for using streams with IJsonizeParser implemetors</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
-        <AssemblyVersion>3.0.0</AssemblyVersion>
-        <FileVersion>3.0.0</FileVersion>
         <PackageTags>JSON,HTML,Convert,Abstractions,Jsonize</PackageTags>
-        <Copyright>2016-2021 Jack Witbrock Finlay</Copyright>
+        <Copyright>2016-2022 Jack Witbrock Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
         <Title>Jsonize.Abstractions</Title>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
 </Project>

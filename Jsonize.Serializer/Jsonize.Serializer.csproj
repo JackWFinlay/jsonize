@@ -4,30 +4,32 @@
         <PackageId>Jsonize.Serializer</PackageId>
         <AssemblyName>Jsonize.Serializer</AssemblyName>
         <IsPackable>True</IsPackable>
-        <Version>3.0.0</Version>
+        <Version>3.1.0</Version>
+        <AssemblyVersion>3.1.0</AssemblyVersion>
+        <FileVersion>3.1.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>A serializer package for the package Jsonize using System.Text.Json</Description>
-        <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Serializer</PackageReleaseNotes>
+        <PackageReleaseNotes>Add net6.0 target.</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
-        <AssemblyVersion>3.0.0</AssemblyVersion>
-        <FileVersion>3.0.0</FileVersion>
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
-        <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
         <Title>Jsonize.Serializer</Title>
-        <Copyright>2016-2021 Jack Witbrock Finlay</Copyright>
+        <Copyright>2016-2022 Jack Witbrock Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
-        <LangVersion>8</LangVersion>
+        <LangVersion>10</LangVersion>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Jsonize.Abstractions\Jsonize.Abstractions.csproj" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="6.0.5" />
     </ItemGroup>
 
 </Project>
