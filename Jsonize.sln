@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jsonize.Serializer", "Jsoni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jsonize.Benchmarks", "Jsonize.Benchmarks\Jsonize.Benchmarks.csproj", "{F0EC1AFD-5F7A-4650-A4B8-460BE3AB2588}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jsonize.DependencyInjection", "Jsonize.DependencyInjection\Jsonize.DependencyInjection.csproj", "{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,5 +65,11 @@ Global
 		{F0EC1AFD-5F7A-4650-A4B8-460BE3AB2588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0EC1AFD-5F7A-4650-A4B8-460BE3AB2588}.Benchmarks|Any CPU.ActiveCfg = Release|Any CPU
 		{F0EC1AFD-5F7A-4650-A4B8-460BE3AB2588}.Benchmarks|Any CPU.Build.0 = Release|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Benchmarks|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BDA6ABA-CDCD-4DCF-BB18-07BED089B0C1}.Benchmarks|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
