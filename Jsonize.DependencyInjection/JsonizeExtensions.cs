@@ -1,7 +1,8 @@
+using System;
 using Jsonize.Abstractions.Configuration;
 using Jsonize.Abstractions.Interfaces;
 using Jsonize.Parser;
-using Jsonize.Serializer.Json.Net;
+using Jsonize.Serializer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jsonize.DependencyInjection

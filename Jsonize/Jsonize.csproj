@@ -19,6 +19,7 @@
         <Configurations>Debug;Release;Benchmarks</Configurations>
         <Platforms>AnyCPU</Platforms>
         <Copyright>2016-2022 Jack Witbrock Finlay</Copyright>
+        <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
     </PropertyGroup>
     <ItemGroup>
         <Content Include="readme.txt">
