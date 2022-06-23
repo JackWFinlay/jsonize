@@ -38,15 +38,15 @@ public class JsonizeBenchmarks
     }
     
     [Benchmark]
-    public void JsonizerHtmlBodyP()
+    public async Task JsonizerHtmlBodyP()
     {
-        _jsonizer.ParseToStringAsync(StringResources.HtmlBodyP);
+        await _jsonizer.ParseToStringAsync(StringResources.HtmlBodyP);
     }
     
     [Benchmark]
-    public void JsonizerHtmlBodyPStream()
+    public async Task JsonizerHtmlBodyPStream()
     {
-        _jsonizer.ParseToStringAsync(_htmlBodyStream);
+        await _jsonizer.ParseToStringAsync(_htmlBodyStream);
         _htmlBodyStream.Position = 0;
     }
     
@@ -58,15 +58,15 @@ public class JsonizeBenchmarks
     }
     
     [Benchmark]
-    public void JsonizerDocoHtmlExample()
+    public async Task JsonizerDocoHtmlExample()
     {
-        _jsonizer.ParseToStringAsync(StringResources.DocoHtmlExample);
+        await _jsonizer.ParseToStringAsync(StringResources.DocoHtmlExample);
     }
     
     [Benchmark]
-    public void JsonizerDocoHtmlExampleStream()
+    public async Task JsonizerDocoHtmlExampleStream()
     {
-        _jsonizer.ParseToStringAsync(_docoHtmlStream);
+        await _jsonizer.ParseToStringAsync(_docoHtmlStream);
         _docoHtmlStream.Position = 0;
     }
     
@@ -78,15 +78,15 @@ public class JsonizeBenchmarks
     }
     
     [Benchmark]
-    public void JsonizerLargeExample()
+    public async Task JsonizerLargeExample()
     {
-        _jsonizer.ParseToStringAsync(StringResources.LargeExample);
+        await _jsonizer.ParseToStringAsync(StringResources.LargeExample);
     }
     
     [Benchmark]
-    public void JsonizerLargeExampleStream()
+    public async Task JsonizerLargeExampleStream()
     {
-        _jsonizer.ParseToStringAsync(_largeExampleStream);
+        await _jsonizer.ParseToStringAsync(_largeExampleStream);
         _largeExampleStream.Position = 0;
     }
 }
