@@ -7,9 +7,9 @@
         <Description>Dependency Injection helpers for Jsonize</Description>
         <PackageReleaseNotes>First release of Jsonize.DependencyInjection package</PackageReleaseNotes>
         <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
-        <Version>3.1.0</Version>
-        <AssemblyVersion>3.1.0</AssemblyVersion>
-        <FileVersion>3.1.0</FileVersion>
+        <Version>3.1.1</Version>
+        <AssemblyVersion>3.1.1</AssemblyVersion>
+        <FileVersion>3.1.1</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
