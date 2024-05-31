@@ -17,11 +17,11 @@ namespace Jsonize.Test
         [Fact]
         public async Task Serialize_DefaultSettings_SerializesCorrectly()
         {
-            string actual = await _testFixture.JsonizeSerializer.Serialize(JsonizeNodeTestResources.HtmlBodyP);
+            string actual = await _testFixture.JsonizeSerializer.Serialize(JsonizeNodeTestResources.HtmlBodyPEnhanced);
 
             actual
                 .Should()
-                .Be(StringResources.HtmlBodyPResult);
+                .Be(StringResources.HtmlBodyPResultEnhanced);
         }
     }
 }

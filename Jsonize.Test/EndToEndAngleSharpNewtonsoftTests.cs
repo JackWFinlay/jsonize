@@ -24,7 +24,7 @@ namespace Jsonize.Test
         {
             var jsonize = await _fixture.Jsonizer.ParseToStringAsync(StringResources.DocoHtmlExample);
 
-            Assert.Equal(StringResources.DocoHtmlExampleResult, jsonize);
+            Assert.Equal(StringResources.DocoHtmlExampleResultEnhanced, jsonize);
             
             _testOutputHelper.WriteLine(jsonize);
         }
@@ -36,7 +36,7 @@ namespace Jsonize.Test
 
             var output = await _fixture.Jsonizer.ParseToStringAsync(html);
 
-            Assert.Equal(StringResources.HtmlBodyPResult, output);
+            Assert.Equal(StringResources.HtmlBodyPResultEnhanced, output);
             
             _testOutputHelper.WriteLine(output);
         }

@@ -5,20 +5,20 @@
         <AssemblyName>Jsonize</AssemblyName>
         <IsPackable>True</IsPackable>
         <Description>Convert HTML to JSON</Description>
-        <PackageReleaseNotes>Fixes a major performance regression from migration to new parsing engine in 3.0.0. Adds methods for consuming HTML from a stream.</PackageReleaseNotes>
-        <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
-        <Version>3.1.1</Version>
-        <AssemblyVersion>3.1.1</AssemblyVersion>
-        <FileVersion>3.1.1</FileVersion>
+        <PackageReleaseNotes>Fixes a bug in the way that text nodes are parsed</PackageReleaseNotes>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>3.2.0</Version>
+        <AssemblyVersion>3.2.0</AssemblyVersion>
+        <FileVersion>3.2.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
-        <Authors>Jack Witbrock Finlay</Authors>
+        <Authors>Jack W Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
         <Title>Jsonize</Title>
         <Configurations>Debug;Release;Benchmarks</Configurations>
         <Platforms>AnyCPU</Platforms>
-        <Copyright>2016-2022 Jack Witbrock Finlay</Copyright>
+        <Copyright>2016-2024 Jack W Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
     </PropertyGroup>
     <ItemGroup>
