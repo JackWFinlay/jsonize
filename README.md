@@ -39,6 +39,16 @@ From version 3.1.0 you can now directly pass in a `Stream` object for your HTML 
 The methods accepting a `Stream` are overloads on the same method names as before.
 There's no real performance increase, but you'll no longer have to process the `Stream` to a `string` yourself first!
 
+### Version 3.2.0
+#### Paragraph Text Handling
+From version 3.2.0, you can now control how paragraph text is handled.
+Previously, all text was treated as a single node and child text nodes were ignored after the first.
+This meant that if you had for example a `p` tag with a `span` tag inside, the text of the `span` tag and anything following would be ignored.
+Now, you can control this behaviour with the `ParagraphHandling` enum in the `JsonizeParserConfiguration` object.
+The options are:
+- `ParagraphHandling.Enhanced` (default) - All text is pushed to text nodes.
+- `ParagraphHandling.Classic` - Only the first text node is pushed to the parent node.
+
 ### Deprecation Note:
 Version `3.0.0` introduced a major performance regression that could make the run time many hundred times worse
 (compared to version 1.0.9)!. 
@@ -99,6 +109,7 @@ JsonizeParserConfiguration parserConfiguration = new JsonizeParserConfiguration(
     EmptyTextNodeHandling = EmptyTextNodeHandling.Ignore,
     TextTrimHandling = TextTrimHandling.Trim,
     ClassAttributeHandling = ClassAttributeHandling.Array
+    ParagraphHandling = ParagraphHandling.Enhanced
 }
 
 JsonizeConfiguration jsonizeConfiguration = new JsonizeConfiguration
@@ -153,102 +164,134 @@ The following HTML:
 Becomes:
 ``` JSON
 {
-    "nodeType": "Document",
-    "tag": null,
-    "text": null,
-    "attr": {},
-    "children": [
+  "nodeType": "Document",
+  "tag": null,
+  "text": null,
+  "attr": {},
+  "children": [
+    {
+      "nodeType": "DocumentType",
+      "tag": "html",
+      "text": null,
+      "attr": {},
+      "children": []
+    },
+    {
+      "nodeType": "Element",
+      "tag": "html",
+      "text": null,
+      "attr": {},
+      "children": [
         {
-            "nodeType": "DocumentType",
-            "tag": "html",
-            "text": null,
-            "attr": {},
-            "children": []
+          "nodeType": "Element",
+          "tag": "head",
+          "text": null,
+          "attr": {},
+          "children": [
+            {
+              "nodeType": "Element",
+              "tag": "title",
+              "text": null,
+              "attr": {},
+              "children": [
+                {
+                  "nodeType": "Text",
+                  "tag": "#text",
+                  "text": "Jsonize",
+                  "attr": {},
+                  "children": []
+                }
+              ]
+            }
+          ]
         },
         {
-            "nodeType": "Element",
-            "tag": "html",
-            "text": null,
-            "attr": {},
-            "children": [
+          "nodeType": "Element",
+          "tag": "body",
+          "text": null,
+          "attr": {},
+          "children": [
+            {
+              "nodeType": "Element",
+              "tag": "div",
+              "text": null,
+              "attr": {
+                "id": "parent",
+                "class": [
+                  "parent-div"
+                ]
+              },
+              "children": [
                 {
-                    "nodeType": "Element",
-                    "tag": "head",
-                    "text": null,
-                    "attr": {},
-                    "children": [
-                        {
-                            "nodeType": "Element",
-                            "tag": "title",
-                            "text": "Jsonize",
-                            "attr": {},
-                            "children": []
-                        }
+                  "nodeType": "Element",
+                  "tag": "div",
+                  "text": null,
+                  "attr": {
+                    "id": "child1",
+                    "class": [
+                      "child-div",
+                      "child1"
                     ]
+                  },
+                  "children": [
+                    {
+                      "nodeType": "Text",
+                      "tag": "#text",
+                      "text": "Some Text",
+                      "attr": {},
+                      "children": []
+                    }
+                  ]
                 },
                 {
-                    "nodeType": "Element",
-                    "tag": "body",
-                    "text": null,
-                    "attr": {},
-                    "children": [
-                        {
-                            "nodeType": "Element",
-                            "tag": "div",
-                            "text": null,
-                            "attr": {
-                                "id": "parent",
-                                "class": [
-                                    "parent-div"
-                                ]
-                            },
-                            "children": [
-                                {
-                                    "nodeType": "Element",
-                                    "tag": "div",
-                                    "text": "Some Text",
-                                    "attr": {
-                                        "id": "child1",
-                                        "class": [
-                                            "child-div",
-                                            "child1"
-                                        ]
-                                    },
-                                    "children": []
-                                },
-                                {
-                                    "nodeType": "Element",
-                                    "tag": "div",
-                                    "text": "Some Text",
-                                    "attr": {
-                                        "id": "child2",
-                                        "class": [
-                                            "child-div",
-                                            "child2"
-                                        ]
-                                    },
-                                    "children": []
-                                },
-                                {
-                                    "nodeType": "Element",
-                                    "tag": "div",
-                                    "text": "Some Text",
-                                    "attr": {
-                                        "id": "child3",
-                                        "class": [
-                                            "child-div",
-                                            "child3"
-                                        ]
-                                    },
-                                    "children": []
-                                }
-                            ]
-                        }
+                  "nodeType": "Element",
+                  "tag": "div",
+                  "text": null,
+                  "attr": {
+                    "id": "child2",
+                    "class": [
+                      "child-div",
+                      "child2"
                     ]
+                  },
+                  "children": [
+                    {
+                      "nodeType": "Text",
+                      "tag": "#text",
+                      "text": "Some Text",
+                      "attr": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "nodeType": "Element",
+                  "tag": "div",
+                  "text": null,
+                  "attr": {
+                    "id": "child3",
+                    "class": [
+                      "child-div",
+                      "child3"
+                    ]
+                  },
+                  "children": [
+                    {
+                      "nodeType": "Text",
+                      "tag": "#text",
+                      "text": "Some Text",
+                      "attr": {},
+                      "children": []
+                    }
+                  ]
                 }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
 

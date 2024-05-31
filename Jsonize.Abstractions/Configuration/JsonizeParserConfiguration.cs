@@ -6,11 +6,13 @@ namespace Jsonize.Abstractions.Configuration
         private const NullValueHandling DefaultNullValueHandling = NullValueHandling.Ignore;
         private const TextTrimHandling DefaultTextTrimHandling = TextTrimHandling.Trim;
         private const ClassAttributeHandling DefaultClassAttributeHandling = ClassAttributeHandling.Array;
+        private const ParagraphHandling DefaultParagraphHandling = ParagraphHandling.Enhanced;
 
         private EmptyTextNodeHandling? _emptyTextNodeHandling;
         private NullValueHandling? _nullValueHandling;
         private TextTrimHandling? _textTrimHandling;
         private ClassAttributeHandling? _classAttributeHandling;
+        private ParagraphHandling? _paragraphHandling;
 
         /// <summary>
         /// Gets or sets how empty Text nodes are handled during conversion.
@@ -50,6 +52,16 @@ namespace Jsonize.Abstractions.Configuration
         {
             get => _classAttributeHandling ?? DefaultClassAttributeHandling;
             set => _classAttributeHandling = value;
+        }
+        
+        /// <summary>
+        /// Gets or sets how the paragraph handling is handled during conversion.
+        /// </summary>
+        /// <value>Paragraph handling.</value>
+        public ParagraphHandling ParagraphHandling
+        {
+            get => _paragraphHandling ?? DefaultParagraphHandling;
+            set => _paragraphHandling = value;
         }
     }
 }

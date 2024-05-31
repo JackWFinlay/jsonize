@@ -4,21 +4,21 @@
         <PackageId>Jsonize.Serializer.Json.Net</PackageId>
         <AssemblyName>Jsonize.Serializer.Json.Net</AssemblyName>
         <IsPackable>True</IsPackable>
-        <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
-        <Version>3.1.1</Version>
-        <AssemblyVersion>3.1.1</AssemblyVersion>
-        <FileVersion>3.1.1</FileVersion>
+        <TargetFrameworks>netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+        <Version>3.2.0</Version>
+        <AssemblyVersion>3.2.0</AssemblyVersion>
+        <FileVersion>3.2.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>A serializer package for the package Jsonize using Newtonsoft.Json</Description>
-        <PackageReleaseNotes>Migrated from the package JackWFinlay.Jsonize.Serializer.NewtonsoftJson</PackageReleaseNotes>
+        <PackageReleaseNotes>Fixes a bug in the way that text nodes are parsed</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/JackWFinlay/jsonize</RepositoryUrl>
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
-        <Copyright>2016-2021 Jack Witbrock Finlay</Copyright>
+        <Copyright>2016-2024 Jack W Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
-        <LangVersion>8</LangVersion>
+        <LangVersion>12</LangVersion>
         <Title>Jsonize.Serializer.Json.Net</Title>
         <Configurations>Debug;Release;Benchmarks</Configurations>
         <Platforms>AnyCPU</Platforms>
@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>

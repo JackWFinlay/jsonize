@@ -8,7 +8,6 @@ using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using AngleSharp.Io;
 using Jsonize.Abstractions.Configuration;
 using Jsonize.Abstractions.Interfaces;
 using Jsonize.Abstractions.Models;
@@ -186,11 +185,23 @@ namespace Jsonize.Parser
 
         private string GetInnerText(INode element)
         {
-            var innerText = element.NodeType switch
+            string innerText = "";
+            if (_jsonizeParserConfiguration.ParagraphHandling == ParagraphHandling.Enhanced)
             {
-                NodeType.Comment => element.TextContent,
-                _ =>  element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault()
-            };
+                innerText = element switch
+                {
+                    IText => element.TextContent,
+                    _ => ""
+                };
+            }
+            else // Classic handling
+            {
+                innerText = element.NodeType switch
+                {
+                    NodeType.Comment => element.TextContent,
+                    _ =>  element.ChildNodes.OfType<IText>().Select(m => m.Text).FirstOrDefault()
+                };
+            }
 
             innerText = _jsonizeParserConfiguration.TextTrimHandling == TextTrimHandling.Trim
                 ? innerText?.Trim()
