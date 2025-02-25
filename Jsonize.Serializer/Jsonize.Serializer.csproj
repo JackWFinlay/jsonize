@@ -4,9 +4,7 @@
         <PackageId>Jsonize.Serializer</PackageId>
         <AssemblyName>Jsonize.Serializer</AssemblyName>
         <IsPackable>True</IsPackable>
-        <Version>3.2.0</Version>
-        <AssemblyVersion>3.2.0</AssemblyVersion>
-        <FileVersion>3.2.0</FileVersion>
+        <Version>3.2.1</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>A serializer package for the package Jsonize using System.Text.Json</Description>
         <PackageReleaseNotes>Fixes a bug in the way that text nodes are parsed</PackageReleaseNotes>
@@ -16,7 +14,7 @@
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Title>Jsonize.Serializer</Title>
-        <Copyright>2016-2024 Jack W Finlay</Copyright>
+        <Copyright>2016-2025 Jack W Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
         <LangVersion>12</LangVersion>
@@ -29,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+      <PackageReference Include="System.Text.Json" Version="9.0.2" />
     </ItemGroup>
 
 </Project>

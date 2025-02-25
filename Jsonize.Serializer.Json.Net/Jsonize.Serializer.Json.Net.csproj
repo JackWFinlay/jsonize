@@ -6,8 +6,6 @@
         <IsPackable>True</IsPackable>
         <TargetFrameworks>netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
         <Version>3.2.0</Version>
-        <AssemblyVersion>3.2.0</AssemblyVersion>
-        <FileVersion>3.2.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>A serializer package for the package Jsonize using Newtonsoft.Json</Description>
         <PackageReleaseNotes>Fixes a bug in the way that text nodes are parsed</PackageReleaseNotes>
@@ -15,7 +13,7 @@
         <Authors>Jack Witbrock Finlay</Authors>
         <PackageProjectUrl>https://github.com/JackWFinlay/jsonize</PackageProjectUrl>
         <PackageTags>JSON,HTML,Convert,Jsonize</PackageTags>
-        <Copyright>2016-2024 Jack W Finlay</Copyright>
+        <Copyright>2016-2025 Jack W Finlay</Copyright>
         <PackageLicenseUrl>https://github.com/JackWFinlay/jsonize/blob/master/license.md</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
         <LangVersion>12</LangVersion>
