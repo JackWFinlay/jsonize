@@ -16,7 +16,7 @@ The project now splits the parsing and serialization into separate areas of conc
 as noted by the introduction of the `IJsonizeParser` and `IJsonizeSerializer` interfaces,
 found in the `Jsonize.Abstractions` package.
 These can be implemented by anyone, 
-but a brand new parser has been written using AngleSharp as its HTML engine.
+but a brand-new parser has been written using AngleSharp as its HTML engine.
 This is supplied as the `Jsonize.Parser` package.
 There is available a serialization helper that conforms to the same standard as previous versions,
 using the `System.Text.Json` library.
@@ -61,11 +61,11 @@ Get the NuGet packages:
 
 | **Package**                                                                                | **Build Status**                                                                     | **NuGet Version**                                                                           |
 |:-------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------|
-| [Jsonize](https://www.nuget.org/packages/Jsonize/)                                         | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize)                      |
-| [Jsonize.Abstractions](https://www.nuget.org/packages/Jsonize.Abstractions/)               | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Abstractions)         |
-| [Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)                           | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Parser)               |
-| [Jsonize.Serializer](https://www.nuget.org/packages/Jsonize.Serializer/)                   | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer)           |
-| [Jsonize.Serializer.Json.Net](https://www.nuget.org/packages/Jsonize.Serializer.Json.Net/) | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer.Json.Net)  |
+| [Jsonize](https://www.nuget.org/packages/Jsonize/)                                         | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with pre-releases)](https://img.shields.io/nuget/vpre/Jsonize)                     |
+| [Jsonize.Abstractions](https://www.nuget.org/packages/Jsonize.Abstractions/)               | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with pre-releases)](https://img.shields.io/nuget/vpre/Jsonize.Abstractions)        |
+| [Jsonize.Parser](https://www.nuget.org/packages/Jsonize.Parser/)                           | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with pre-releases)](https://img.shields.io/nuget/vpre/Jsonize.Parser)              |
+| [Jsonize.Serializer](https://www.nuget.org/packages/Jsonize.Serializer/)                   | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with pre-releases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer)          |
+| [Jsonize.Serializer.Json.Net](https://www.nuget.org/packages/Jsonize.Serializer.Json.Net/) | ![.NET Core](https://github.com/JackWFinlay/jsonize/workflows/.NET%20Core/badge.svg) | ![Nuget (with pre-releases)](https://img.shields.io/nuget/vpre/Jsonize.Serializer.Json.Net) |
 
 
 ## Usage
